@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="Operations Research 技术面试">
+
+
+
+
+
+
+
+
+  <link rel="alternate" type="application/rss+xml" title="atom 1.0" href="/feed">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+
+
+<link rel="canonical" href="http://blog.fangzhou.me/or_interview/">
+
+
+<meta name="description" content="本文将只限于对技术问题的记录，顺便附附我的想法。  为什么 integer programming 很难解决？    IP 问题是 NP-hard.  primal 和 dual 的关系？  此问题被两个公司问到，也是 OR 的基础问题。答案是下表，也可以用 weak and strong duality 推出来，我记不住，现推的。    Primal/dual Infeasible Optim">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Operations Research 技术面试">
+<meta property="og:url" content="http://blog.fangzhou.me/or_interview/index.html">
+<meta property="og:site_name" content="蓝雨衣">
+<meta property="og:description" content="本文将只限于对技术问题的记录，顺便附附我的想法。  为什么 integer programming 很难解决？    IP 问题是 NP-hard.  primal 和 dual 的关系？  此问题被两个公司问到，也是 OR 的基础问题。答案是下表，也可以用 weak and strong duality 推出来，我记不住，现推的。    Primal/dual Infeasible Optim">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-04-09T01:18:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operations Research 技术面试">
+<meta name="twitter:description" content="本文将只限于对技术问题的记录，顺便附附我的想法。  为什么 integer programming 很难解决？    IP 问题是 NP-hard.  primal 和 dual 的关系？  此问题被两个公司问到，也是 OR 的基础问题。答案是下表，也可以用 weak and strong duality 推出来，我记不住，现推的。    Primal/dual Infeasible Optim">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.css">
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_38tomuzattr.css">
+
+  
+  <script type="text/javascript">
+    var themeConfig = {
+      fancybox: {
+        enable: false
+      },
+    };
+  </script>
+
+
+
+
+
+    <title> Operations Research 技术面试 - 蓝雨衣 </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">蓝雨衣</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        <article class="post">
+            <header class="post-header">
+                <h1 class="post-title">
+                    Operations Research 技术面试
+                </h1>
+            </header>
+            <div class="post-content">
+                <!--这个季节面过的 OR 背景比较强的公司有 Norfolk Southern, United Airline, Apple, American Airline, Amazon. 面完还是发现面试问题有很多共通点。在这里记一下实习面试过哪些东西，也许以后找工作还会用得上。
+
+知道走 OR 的路是个苦差事，比如一天死几斤脑细胞这样，但是自己很喜欢它。 一部分因为从技术角度建模，解决实际问题比概念化的各种 idea 来的更实在，心中不虚，很踏实。做的东西可以看到应用于实际，为公司减少了多少成本。不断地优化，看到模型，方法的成长，肯定很喜悦。-->
+<p>本文将只限于对技术问题的记录，顺便附附我的想法。</p>
+<blockquote>
+<p>为什么 integer programming 很难解决？</p>
+</blockquote>
+<!--这个问题简直在某种程度上直达 OR 的基石：IP 存在之意义。为什么这个学科从无到有，发展到枝繁叶茂。要是 IP 像 1+1=2 那样简单，为什么公司还要雇你。
+-->
+<!--我给他了一长一短两个答案：第一个是虽然 LP 很好解决，直接套用 LP 解 IP 往往得不到整数解，你还得用各种技巧如 branch and bound, polyhedral analysis, lagrangean relaxation, column generation, benders decomposition, dynamic programming， 每一种方法都是 non-trivial。短答案是：-->
+<p>IP 问题是 NP-hard.</p>
+<blockquote>
+<p>primal 和 dual 的关系？</p>
+</blockquote>
+<p>此问题被两个公司问到，也是 OR 的基础问题。答案是下表，也可以用 weak and strong duality 推出来，我记不住，现推的。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>Primal/dual</strong></th>
+<th style="text-align:center"><strong>Infeasible</strong></th>
+<th style="text-align:center"><strong>Optimal</strong></th>
+<th style="text-align:center"><strong>Unbounded</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>Infeasible</strong></td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">✓</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>Optimal</strong></td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">×</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>Unbounded</strong></td>
+<td style="text-align:center">✓</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>简单的概率组合题，举一例：A 和 B 轮流掷硬币，每轮同时掷两枚，谁先掷到双 head 谁赢。假设 A 先开始。求 A 赢的概率。</p>
+</blockquote>
+<p>知道 geometric distribution 可以直接给答案。我又是现推，思路是先找到每轮 A 赢的概率，再求和，是个几何级数，求个极限。当时又忘了几何级数的求和公式（记性太差），准备硬推，被面试的拦住。</p>
+<blockquote>
+<p>经典的 uncacitated facility location problem，求 formulation。</p>
+</blockquote>
+<p>无数 IP 教材的例子题。就不赘述了。我的限制 x，y 关系的约束是 aggregated 版本。在此基础上有一家公司还问了，假如把这个约束替换为 decomposed 版本，怎么评价这两个 formulation 的好坏。</p>
+<blockquote>
+<p>解 IP 有哪些方法？</p>
+</blockquote>
+<p>方法一大堆就不罗列了。小插曲是当我说 lagrangean relaxation 时，面试的顺便问了这个怎么 work 的，顺着思路又问这个方法下怎么判定 complicated constraint 和 nice constraint。</p>
+<blockquote>
+<p>newsvendor problem 的最优解是什么？假设有 salvage cost，没有 holding cost，给定了需求的 cumulative distribution function。</p>
+</blockquote>
+<p>当时不太熟悉这个模型，硬建立了一个 stochastic IP 模型。当面试的说其实这个有解析解，我有点小崩溃，推不出来只能跳过。解析解可以参考<a href="http://www.columbia.edu/~gmg2/4000/pdf/lect_07.pdf" target="_blank" rel="noopener">这篇文章</a>。</p>
+<blockquote>
+<p>问了一个 transportation 问题的建模和解法，实质是变体 bin packing 问题。</p>
+</blockquote>
+<p>恰好知道一个很高效的启发式算法，我说，要不要先给你解释下再说建模的事。面试的同意，就大概讲了 <a href="https://en.wikipedia.org/wiki/Bin_packing_problem" target="_blank" rel="noopener">first fit decreasing</a> 的思路，顺便告诉他印象中这个算法的 worst case bound 在 10% 以内，非常好了。他问，为什么这个启发式算法有时达到不了最优，举例说明。之后就是怎么建这个问题的数学模型，顺带又问了个比较两种 formulation 好坏的问题。</p>
+<p>其他问题还有：</p>
+<blockquote>
+<p>给定5个二维点，(0,0), (1,0), (1,1), (-1,0), (-1,-1)，求 regression line。然后，因为之前是用 x predict y，假如还是相同的数据点，用 y predict x，新的 regression line 是什么。</p>
+</blockquote>
+<blockquote>
+<p>还有一堆需要使用额外 binary variable 的 trick 的 IP 建模问题，现已记不起来。</p>
+</blockquote>
+<blockquote>
+<p>笔试问题：证明算数平均数 ≥ 几何平均数。</p>
+</blockquote>
+<blockquote>
+<p>笔试问题：用 Dijkstra 算法求最短路。</p>
+</blockquote>
+<blockquote>
+<p>笔试问题：证明判定一个整数可以被7整除的规则是正确的，此规则基于对该整数各个数位的倒腾，但是已经忘了具体规则的步骤是什么。反正一看就像小学奥数题。</p>
+</blockquote>
+<hr>
+<p><strong>United Airline 面经1</strong><br>
+<a href="http://www.mitbbs.com/article_t/JobHunting/31527441.html" target="_blank" rel="noopener">source</a></p>
+<p>UA summer intern, 老板之前的学生internal refer, 昨天接到电面通知，约了今天。</p>
+<p>第一次电面就面了1小时，这年头混口饭吃真不容易~~</p>
+<p>下面是面试问题：</p>
+<p>先问technical:</p>
+<ol>
+<li>看你的背景挺复杂 （ee 转 ie),说说心路历程</li>
+<li>最近做的project,挑两个说一下</li>
+<li>rate 一下简历上list的programming languages 和softwares(1-10)</li>
+<li>解决过的问题的size (# of variables, 计算时间）</li>
+<li>解释branch and bound算法原理</li>
+<li>是否用过其他算法解IP</li>
+<li>有没有project management经验</li>
+</ol>
+<p>接着是我给他提问，问了一下group的人员情况和如果我被select, 还有什么技术有待<br>
+加强</p>
+<p>然后是他问behavior:</p>
+<ol>
+<li>怎么和老板interaction，有disagreement 怎么办</li>
+<li>strength和weakness</li>
+<li>你这个人除了能建model解model还有什么优点可以拿来说 （这个刚开始没听懂，后<br>
+来才知道问personality)</li>
+</ol>
+<p>最后是brain teasing:</p>
+<ol>
+<li>房间里有3个人，至少两个人在一星期同一天出生的概率</li>
+<li>证明两个连续的偶数不能被4整除</li>
+<li>estimate此时美利坚上空有多少架飞机在飞</li>
+</ol>
+<p>technical 和 behavior 还有一些问题记不住了，最后说是3周后通知要不要onsite~~</p>
+<p>觉得刚开始有点紧张，project说的太快，有些技术性的东西没说，后面的brain<br>
+teasing 太着急把第一个问题算错 (不过他提醒了一下），不知道能不能捞到个onsite</p>
+<hr>
+<p><strong>United Airline 面经2</strong><br>
+<a href="http://www.weiming.info/zhuti/JobHunting/32021837/" target="_blank" rel="noopener">source</a></p>
+<p>4今天下午刚面完，时长大约一小时。</p>
+<p>先是介绍自己的专业背景，近期做过的几个projects，常用的编程语言和软件，论文研<br>
+究课题，OR众多方向中自己最感兴趣和最擅长的方向，有没有统计背景和在工业界工作<br>
+的经验。</p>
+<p>接下来是behavior问题：</p>
+<ol>
+<li>strength和weakness</li>
+<li>最喜欢的课程和最不喜欢的课程及原因<br>
+然后是brain teasing，都还比较简单</li>
+<li>掷两个筛子，得到同一个数字的概率；</li>
+<li>掷三个筛子，至少两个相同的概率；</li>
+<li>证明两个连续的偶数不能被4整除;</li>
+<li>一个细菌每分钟体积增长两倍，100分钟充满一个特定的空间；问四个同样的细菌充<br>
+满这个空间需要几分钟；</li>
+<li>芝加哥飞纽约一航班共200个座位，一张机票200刀，飞行成本20,000刀，问至少需要卖出多张机票才不亏本（没弄明白这个问题是想考啥，也或许我理解错题了）。</li>
+</ol>
+<p>最后问了一下我对united airline的了解情况，给我5分钟时间向她提问。</p>
+<p>挂电话前说如果这轮电面通过，两三星期后给消息onsite；如果没收到任何消息，就是<br>
+被挂掉了。。。</p>
+<p>===</p>
+<p><strong>Disney Decision Science Intern 2017 fall</strong></p>
+<p>他们组目前有40个全职</p>
+<p>理论问题</p>
+<ol>
+<li>问 Simplex 算法的具体步骤，问什么叫 reduced cost</li>
+</ol>
+<ul>
+<li>给一个 primal，给出其 dual</li>
+<li>解释 primal unbounded，dual 会怎样； primal feasible，dual 会怎样</li>
+<li>解释 weak duality 和 strong duality</li>
+<li>解释 KKT conditions，它是否可以推出最优</li>
+<li>解释 branch and bound 的细节，停止的条件，上下界</li>
+</ul>
+<p>一个具体应用题：给我过去任何时候某个商品的价格与相应的销售量，如何为产品定价最大化收益。</p>
+<p>我提到了首先使用这些数据产生价格需求曲线，然后列出收益关于价格的函数，并解其最大化。他们随之分别问了如何 fit 出曲线，以及如何解这个最大化问题。中间有点想歪，想是不是他们想问我价格歧视，mark down什么的，被他们拉回来了。。。</p>
+<p>fit 曲线部分：继而问了使用什么模型（线性回归），线性回归有哪些假设（我答了线性，error term 是 mean 0 并且 iid），如何解释这个模型，如果价格变量的系数是正表示什么意思。问如何在模型里加入季节性。我说加入12个 binary variable 即可，他问是否可以减成11个 variable，我说可以。然后让我解释这11个变量的每个变量的系数的含义。问还有哪些变量可以加入以更好的预测需求。</p>
+<p>收益最大化部分：让我列出最大化问题。然后解。然后解释为什么这个解一定代表最大值。继而问如果想要给问题加约束，哪些约束需要加进去使其更 reasonable。我列了几个约束。他们就问怎么解这个 constrained optimization。我说用拉格朗日法加 KKT condition可以得出解析解。他们问如果不能用解析解，怎么用算法得出。 我说用梯度下降，牛顿法什么的。让我具体解释梯度下降是如何实施的。然后又问如果是 constrained optimization，怎么应用梯度下降。</p>
+<p>===</p>
+<p><strong>PROS, Scientist Intern Summer 2017</strong></p>
+<ol>
+<li>影子价格的解释</li>
+<li>一个具体的场景，增加一个 seat 需要两百刀，应当以多少钱卖给 customer。</li>
+<li>什么情况下代码可以并行化</li>
+<li>线性回归 minimize sum of squared errors 的解释，又问了 maximum likelihood method，不太清楚他们具体想问什么。</li>
+<li>比较 minimize sum of squared errors 和  minimize sum of absolute errors。</li>
+</ol>
+<p>===</p>
+<p><strong>Amazon, device team 全职， Oct 2017</strong></p>
+<ol>
+<li>求 <code>$\sum_{n=2}^{\infty}\frac{1}{n\ln n}$</code></li>
+<li>Bin packing 问题的建模， 挑战 assumption</li>
+<li>用何种方式解决大型 linear programming，如果很久都跑不出结果，如何解决？</li>
+<li>如果一个优化程序，所有输入都一样，但是仍然每次跑出来解不同，如何解决？<br>
+我说了几个点：固定随机种子，有可能是多最优解，那么可以设立次要目标，可以加入 symmetry breaking constraints。</li>
+<li>y 是一个 binary variable，如果 <code>$y=1 \implies ax\leq b$</code>，如何用不等式表示？<br>
+<code>$ax\leq b + M(1-y) $</code><br>
+如果 <code>$y=1 \iff ax\leq b$</code>，如何用不等式表示？<br>
+上式加上 <code>$ax+My \geq b +\epsilon$</code></li>
+<li>给我uniform random variable, 如何得到exponential random variable?<br>
+用 inverse cdf</li>
+</ol>
+<p><strong>京东，Data Science Lab, operation research 全职， Oct 2017</strong></p>
+<ol>
+<li>一个六面骰子，点数从1-6，每个面概率相等。你有三次掷骰子的机会，每掷一次可以选择停止并接受本轮点数为奖励或掷下一次。如何制定最优策略使得奖励的期望最大化。<br>
+我的解题思路：动态规划。递归式是</li>
+</ol>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>6</mn></munderover><mfrac><mn>1</mn><mn>6</mn></mfrac><mi>max</mi><mo>⁡</mo><mo>{</mo><mi>i</mi><mo separator="true">,</mo><mi>V</mi><mo>(</mo><mi>t</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>}</mo></mrow><annotation encoding="application/x-tex">V(t)=\sum_{i=1}^6 \frac{1}{6} \max \{i,V(t-1)\} 
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.0787820000000004em;vertical-align:-1.277669em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8011130000000004em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">max</span><span class="mopen">{</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mopen">(</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">}</span></span></span></span></span></p>
+<p><code>$V(1)=3.5$</code><br>
+<code>$V(2)=(3.5 \times 3+4+5+6)/{6}=4.25$</code><br>
+<code>$V(3)=(4.25 \times 4+5+6)/6=4.67$</code><br>
+因此三次机会的最佳策略是。第一次机会，投到5或6停止，否则投第二次。第二次机会，投到4或5或6停止，否则投第三次。第三次是最后一次，没有策略。如此得到的最大化点数期望为4.67。</p>
+<ol start="2">
+<li>
+<p>如果一个大型 MIP 问题跑了很久也不出结果怎么解决？<br>
+采用 warm start.<br>
+尝试调整 solver 的参数， 比如 feasibility 或 optimality 优先，LP solver 的选择（primal，dual，network 等）。<br>
+找 tight formulation，strong valid inequality 等。<br>
+Decomposition。</p>
+</li>
+<li>
+<p>一维数据 k-means 的算法。我提了几个：</p>
+<ol>
+<li>用0-1变量表示每个数据点是否在某个cluster里，然后用数学规划 formulate 出 model。</li>
+<li>一维数据的聚类实际是找数轴上的分界点。那么可以用 neighborhood search 方法，初始时平分数轴，每次左右移动分界点都要保证有所改进，直至不能改进。</li>
+<li>动态规划：如果有 T 个 cluster，n 个数据点，令 <code>$f(x,n)$</code> 为剩余 n 个点时，聚合左边 x 个点的成本（距离中心点距离之和），那么 <code>$V_t(n)=\min_x \{f(x,n)+V_{t+1}(n-x)\}$</code>。 复杂度为 <code>$O(n^2 T)$</code>。</li>
+</ol>
+</li>
+<li>
+<p>排班问题，如何实现不能连续超过五天上班。 <code>$x_j+x_{j+1}+x_{j+2}+x_{j+3}+x_{j+4} \leq 5$</code></p>
+</li>
+<li>
+<p>排班问题，如何实现不能出现休息一天，工作一天，休息一天，即不能出现010的情况。<code>$x_1+x_3 \geq x_2$</code></p>
+</li>
+<li>
+<p>如何线性表示 piece-wise linear function <code>$y(x)$</code>.<br>
+第一种方法：</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>y</mi><mn>1</mn></msub><mo>(</mo><mi>x</mi><mo>)</mo><msub><mi>δ</mi><mn>1</mn></msub><mo>+</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>+</mo><msub><mi>y</mi><mi>n</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo><msub><mi>δ</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">y=y_1(x)\delta_1 + ... + y_n(x)\delta_n
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03785em;">δ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03785em;">δ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+<p>每个<code>$\delta_i$</code> 都是0-1变量。那么只要可以线性地表示出 <code>$x\delta_i$</code> 即可。设变量 <code>$\alpha \geq 0$</code>.</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi><mo>≥</mo><mi>x</mi><mo>−</mo><mi>M</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>δ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\alpha \geq x- M(1-\delta)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03785em;">δ</span><span class="mclose">)</span></span></span></span></span></p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi><mo>≤</mo><mi>x</mi><mo>+</mo><mi>M</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>δ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\alpha \leq x + M(1-\delta)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03785em;">δ</span><span class="mclose">)</span></span></span></span></span></p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>α</mi><mo>≤</mo><mi>M</mi><mi>δ</mi></mrow><annotation encoding="application/x-tex">\alpha \leq M\delta
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault" style="margin-right:0.03785em;">δ</span></span></span></span></span></p>
+<p>那么明显 <code>$\alpha = x\delta$</code><br>
+第二种方法：以后补</p>
+</li>
+</ol>
+<p><strong>Precima， 全职， Oct 2017</strong></p>
+<ol>
+<li>一个细菌每分钟体积变大两倍，一个杯子100分钟充满，问如果初始是两个细菌多少分钟充满这个杯子？<br>
+99分钟，假装从第二分钟开始。</li>
+<li>有十台造币机，正常的造币机会不断的吐出恰好 100g 重量的硬币。已知这十台里面有且只有一台有问题，它会不断吐出 90g 的硬币，你有一个精确的电子秤，如何只称一次找到那台有问题的机器。<br>
+给每台机器编号，从1-10. 从每台机器选取其编号数量的硬币，一起称。最后差多少克，除以10就是有问题机器的编号。</li>
+<li>给定一个线性规划的解如何判断其为最优解。<br>
+用 primal feasibility, dual feasibility, complementary slackness。</li>
+</ol>
+<p><strong>悠桦林， 全职， Nov 2017</strong></p>
+<ol>
+<li>介绍 Benders decomposition 和 Dantzig-Wolfe decomposition 的区别、用法。</li>
+<li>C++ 的STL中, deque和vector的区别，什么时候用哪种容器？聊到了deque的内存分配机制（非连续）</li>
+<li>聊聊对C++析构函数（destructor）的看法</li>
+</ol>
+<p><strong>BNSF, 全职, Feb 2018</strong></p>
+<p>以下问题不完全。</p>
+<ol>
+<li>编程：给定一组数，如何输出它的全组合？ --&gt; 利用二进制数表示这组数每个元素的取舍</li>
+<li>编程：Python 和 C++ 的区别</li>
+<li>编程：解释面向对象编程的继承和多态 <a href="https://www.runoob.com/cplusplus/cpp-polymorphism.html" target="_blank" rel="noopener">参考一个</a></li>
+<li>优化：TSP的各种formulation及对比。</li>
+<li>优化：证明图论中，tree 一定是 bipartite graph</li>
+<li>优化：给定铁路总里程，并知道任何时候，每个地方都刚好每分钟一辆列车路过，问是否能算出网络中的总列车数？如果不能，还需要哪些数据？</li>
+</ol>
+
+            </div>
+            
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="button" id="load-disqus" onclick="disqus.load();">Load Disqus </button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </article>
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2011 -
+    
+    2019
+    <span class="footer-author">F. Sun</span>
+
+    
+
+</span>
+
+      </footer>
+
+      <a class="back-to-top" onclick="topFunction()" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </a>
+    </div>
+
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'fsun';
+  var disqus_identifier = 'or_interview/index.html';
+
+  var disqus_title = "Operations Research 技术面试";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          document.getElementById("load-disqus").remove(); // 加载后移除按钮
+      }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+    <script type="text/javascript">
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("back-to-top").style.display = "block";
+  } else {
+    document.getElementById("back-to-top").style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
+function leftArrowPressed() {
+   prevUrl = document.getElementsByClassName("prev")[0].href
+   window.location.assign(prevUrl)
+}
+
+function rightArrowPressed() {
+  nextUrl = document.getElementsByClassName("next")[0].href
+   window.location.assign(nextUrl)
+}
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    switch (evt.keyCode) {
+        case 37:
+            leftArrowPressed();
+            break;
+        case 39:
+            rightArrowPressed();
+            break;
+    }
+};
+</script>
+
+    
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-49265936-4', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+  </body>
+</html>

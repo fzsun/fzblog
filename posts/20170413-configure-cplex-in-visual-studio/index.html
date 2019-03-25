@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="如何一步配置 Visual Studio C++ 调用 CPLEX 接口">
+
+
+
+
+  <meta name="keywords" content="折腾,">
+
+
+
+
+
+  <link rel="alternate" type="application/rss+xml" title="atom 1.0" href="/feed">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+
+
+<link rel="canonical" href="http://blog.fangzhou.me/posts/20170413-configure-cplex-in-visual-studio/">
+
+
+<meta name="description" content="4.13.2017 更新。 注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
+<meta name="keywords" content="折腾">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何一步配置 Visual Studio C++ 调用 CPLEX 接口">
+<meta property="og:url" content="http://blog.fangzhou.me/posts/20170413-configure-cplex-in-visual-studio/index.html">
+<meta property="og:site_name" content="蓝雨衣">
+<meta property="og:description" content="4.13.2017 更新。 注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-03-20T21:43:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何一步配置 Visual Studio C++ 调用 CPLEX 接口">
+<meta name="twitter:description" content="4.13.2017 更新。 注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.css">
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_38tomuzattr.css">
+
+  
+  <script type="text/javascript">
+    var themeConfig = {
+      fancybox: {
+        enable: false
+      },
+    };
+  </script>
+
+
+
+
+
+    <title> 如何一步配置 Visual Studio C++ 调用 CPLEX 接口 - 蓝雨衣 </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">蓝雨衣</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          如何一步配置 Visual Studio C++ 调用 CPLEX 接口
+        
+      </h1>
+
+      <time class="post-time">
+          Apr 13 2017
+      </time>
+    </header>
+
+	<div class="post-toc" id="post-toc">
+    <h4>Contents</h4>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何配置-visual-studio-c-调用-cplex-接口"><span class="toc-text"> 如何配置 Visual Studio C++ 调用 CPLEX 接口</span></a></li></ol>
+    </div>
+  </div>
+            <div class="post-content">
+            <blockquote>
+<p>4.13.2017 更新。<br>
+注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。</p>
+</blockquote>
+<p>步骤就一步：</p>
+<p>直接用 Visual Studio 打开<br>
+<code>C:\Program Files\IBM\ILOG\CPLEX_Studio1271\cplex\examples\x64_windows_vs2015\stat_mdd\blend.vcxproj</code>，<br>
+然后 build。</p>
+<p>当然，具体路径应根据自己电脑的安装路径修改。<br>
+但是有个不方便的地方是，blend.vcxproj 所指向的 blend.cpp 文件并不在同一个地方。为了方便以后写代码，可以这么做：</p>
+<ul>
+<li>用记事本打开 blend.vcxproj，翻到最后，把 <code>&lt;ClCompile Include=&quot;..\..\src\cpp\blend.cpp&quot; /&gt;</code> 替换为 <code>&lt;ClCompile Include=&quot;blend.cpp&quot; /&gt;</code>。</li>
+<li>将 blend.cpp 文件拷贝到 blend.vcxproj 所在文件夹即可。</li>
+<li>用这两个文件作为模板，写自己的代码。这两个文件可以拷贝到系统的任何地方。</li>
+</ul>
+<p><strong>以下为原文，写于 2.14.2016</strong></p>
+<hr>
+<p>以前使用 CPLEX 都是在 CPLEX Studio 里用 OPL语言，或者用 AMPL 调用 CPLEX solver。这类建模语言特别容易上手。然而做 research 毕竟还是需要更灵活的使用 CPLEX，稍微混合几个算法就实现不了。</p>
+<p>尝试在 VS 2012中调用 CPLEX 接口，硬是从第一步 <code>#include &lt;ilcplex/ilocplex.h&gt;</code> 就卡住。为了让示例程序跑起来，配置过程中又不断发现坑。网上竟然也没有一个完整的 step by step 的指导（注，后来在中文网络倒是发现不少博文）。折腾了一下午终于妥了。决定把这个坑爹的过程记录一下。</p>
+<p>Before that，先把 IBM 的几个非常有用的 CPLEX 教程传送一下：</p>
+<ul>
+<li><a href="http://www-01.ibm.com/support/knowledgecenter/api/content/nl/en-us/SSSA5P_12.6.2/ilog.odms.studio.help/Optimization_Studio/topics/PLUGINS_ROOT/ilog.odms.studio.help/pdf/gscplex.pdf" target="_blank" rel="noopener">Getting Started with CPLEX</a> 使用 CPLEX 以及 Concert Technology（也就是IBM ILOG给各大编程语言，如 C++, Java, C#, Python，写的API） 必须看的第一个文档，要细看。</li>
+<li><a href="http://www-01.ibm.com/support/knowledgecenter/api/content/nl/en-us/SSSA5P_12.6.2/ilog.odms.studio.help/Optimization_Studio/topics/PLUGINS_ROOT/ilog.odms.studio.help/pdf/usrcplex.pdf" target="_blank" rel="noopener">CPLEX User’s Manual</a>  算是中阶用户需要看的文档，也是关于 CPLEX 的 API，也推荐细看。</li>
+<li><a href="http://www-01.ibm.com/support/knowledgecenter/api/content/nl/en-us/SSSA5P_12.6.2/ilog.odms.studio.help/Optimization_Studio/topics/PLUGINS_ROOT/ilog.odms.studio.help/pdf/paramcplex.pdf" target="_blank" rel="noopener">CPLEX Parameters Reference Manual</a> 具体微调 CPLEX 各项参数需要参考的文档，用的时候再查就行了。</li>
+<li><a href="http://www-01.ibm.com/support/knowledgecenter/api/content/nl/en-us/SSSA5P_12.6.2/ilog.odms.studio.help/Optimization_Studio/topics/PLUGINS_ROOT/ilog.odms.studio.help/pdf/opl_languser.pdf" target="_blank" rel="noopener">OPL Language User’s Manual</a> OPL (the IBM ILOG Optimization Programming Language) 的教程，跟之前三个文档完全是不相干的另一个体系， OPL 语言只能用在 CPLEX Studio 里头。</li>
+</ul>
+<p>以下正文开始。</p>
+<hr>
+<h3 id="如何配置-visual-studio-c-调用-cplex-接口"><a class="markdownIt-Anchor" href="#如何配置-visual-studio-c-调用-cplex-接口"></a> 如何配置 Visual Studio C++ 调用 CPLEX 接口</h3>
+<p>软件版本:Visual Studio 2012, CPLEX 12.5.1</p>
+<p>注：以下文件路径需要根据 CPLEX 在自己电脑上的安装路径相应修改。</p>
+<ol>
+<li>新建默认的 C++ Win32 Console Application 项目。</li>
+<li>源码加入头文件 <code>#include &lt;ilcplex/ilocplex.h&gt;</code> 和 一条宏命令<code>ILOSTLBEGIN</code>，后者其实就是用来调用C++的STL。</li>
+<li>BUILD -&gt; Configuration Manager, 把win32改成x64平台。这一步我猜测是因为我的 CPLEX 版本是64位的，所以必须要改。总之 C++和 CPLEX 在平台上要一致。</li>
+<li>接下来需要让 C++ 的 Linker 知道CPLEX 以及 Concert Technology 的库在哪里。Project -&gt; [你的项目名] Properties -&gt; Configuration Properties -&gt; Linker -&gt; Input -&gt; Additional Dependencies 添加:</li>
+</ol>
+<blockquote>
+<ul>
+<li>C:\Program Files\IBM\ILOG\CPLEX_Studio1251\cplex\lib\x64_windows_vs2012\stat_mda\cplex1251.lib</li>
+<li>C:\Program Files\IBM\ILOG\CPLEX_Studio1251\cplex\lib\x64_windows_vs2012\stat_mda\ilocplex.lib</li>
+<li>C:\Program Files\IBM\ILOG\CPLEX_Studio1251\concert\lib\x64_windows_vs2012\stat_mda\concert.lib</li>
+</ul>
+</blockquote>
+<ol start="5">
+<li>然后 include 的各种路径也要添加进去。Project -&gt; [你的项目名] Properties -&gt; Configuration Properties -&gt; C/C++ -&gt; General -&gt; Additional Include Directories 添加:</li>
+</ol>
+<blockquote>
+<ul>
+<li>C:\Program Files\IBM\ILOG\CPLEX_Studio1251\concert\include</li>
+<li>C:\Program Files\IBM\ILOG\CPLEX_Studio1251\cplex\include</li>
+</ul>
+</blockquote>
+<ol start="6">
+<li>Preprocessor 中要添加一些指令，最重要的自然是<code>IL_STD</code>。 Project -&gt; … Properties -&gt; Configuration Properties -&gt; C/C++ -&gt; Preprocessor -&gt; Preprocessor Definitions 添加:</li>
+</ol>
+<blockquote>
+<ul>
+<li>WIN64 (注：如果是32位的，此处应该是 WIN32)</li>
+<li>_CONSOLE</li>
+<li>IL_STD</li>
+<li>_CRT_SECURE_NO_WARNINGS</li>
+</ul>
+</blockquote>
+<ol start="7">
+<li>最后 check 下 debug 功能是否开启了，不然没法 debug。Project -&gt; … Properties -&gt; Configuration Properties -&gt; Linker -&gt; Debugging -&gt; Generate Debug Info 改成 YES</li>
+</ol>
+
+            </div>
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/折腾/">折腾</a>
+          
+       </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/posts/20170521-article/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">博客搬家 — 从 FarBox 到 GitHub</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/posts/20170218-article/">
+        <span class="next-text nav-default">几则小故事 (1)</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="button" id="load-disqus" onclick="disqus.load();">Load Disqus </button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2011 -
+    
+    2019
+    <span class="footer-author">F. Sun</span>
+
+    
+
+</span>
+
+      </footer>
+
+      <a class="back-to-top" onclick="topFunction()" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </a>
+    </div>
+
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'fsun';
+  var disqus_identifier = 'posts/20170413-configure-cplex-in-visual-studio/';
+
+  var disqus_title = "如何一步配置 Visual Studio C++ 调用 CPLEX 接口";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          document.getElementById("load-disqus").remove(); // 加载后移除按钮
+      }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+    <script type="text/javascript">
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("back-to-top").style.display = "block";
+  } else {
+    document.getElementById("back-to-top").style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
+function leftArrowPressed() {
+   prevUrl = document.getElementsByClassName("prev")[0].href
+   window.location.assign(prevUrl)
+}
+
+function rightArrowPressed() {
+  nextUrl = document.getElementsByClassName("next")[0].href
+   window.location.assign(nextUrl)
+}
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    switch (evt.keyCode) {
+        case 37:
+            leftArrowPressed();
+            break;
+        case 39:
+            rightArrowPressed();
+            break;
+    }
+};
+</script>
+
+    
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-49265936-4', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+  </body>
+</html>

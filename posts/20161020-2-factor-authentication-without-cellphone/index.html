@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="description" content="手机不在身边如何二步验证">
+
+
+
+
+  <meta name="keywords" content="折腾,">
+
+
+
+
+
+  <link rel="alternate" type="application/rss+xml" title="atom 1.0" href="/feed">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+
+
+<link rel="canonical" href="http://blog.fangzhou.me/posts/20161020-2-factor-authentication-without-cellphone/">
+
+
+<meta name="description" content="本文给出了一个只需使用桌面浏览器就可以二步验证的方案。  二步验证（2-Factor Authentication，2FA）已在各种隐私敏感应用中使用。因为比传统的账号+密码多了一层验证，各大网站也是推荐用户采取 2FA 来保护自己，我校近期也强制切换到了 2FA 系统。普遍 2FA 的方法是由验证器生成一个一次性的验证码，一般是6位数字。有效期只有30秒，过期便需要重新生成一个验证码。用户登录除">
+<meta name="keywords" content="折腾">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手机不在身边如何二步验证">
+<meta property="og:url" content="http://blog.fangzhou.me/posts/20161020-2-factor-authentication-without-cellphone/index.html">
+<meta property="og:site_name" content="蓝雨衣">
+<meta property="og:description" content="本文给出了一个只需使用桌面浏览器就可以二步验证的方案。  二步验证（2-Factor Authentication，2FA）已在各种隐私敏感应用中使用。因为比传统的账号+密码多了一层验证，各大网站也是推荐用户采取 2FA 来保护自己，我校近期也强制切换到了 2FA 系统。普遍 2FA 的方法是由验证器生成一个一次性的验证码，一般是6位数字。有效期只有30秒，过期便需要重新生成一个验证码。用户登录除">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-03-20T21:44:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手机不在身边如何二步验证">
+<meta name="twitter:description" content="本文给出了一个只需使用桌面浏览器就可以二步验证的方案。  二步验证（2-Factor Authentication，2FA）已在各种隐私敏感应用中使用。因为比传统的账号+密码多了一层验证，各大网站也是推荐用户采取 2FA 来保护自己，我校近期也强制切换到了 2FA 系统。普遍 2FA 的方法是由验证器生成一个一次性的验证码，一般是6位数字。有效期只有30秒，过期便需要重新生成一个验证码。用户登录除">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.css">
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_38tomuzattr.css">
+
+  
+  <script type="text/javascript">
+    var themeConfig = {
+      fancybox: {
+        enable: false
+      },
+    };
+  </script>
+
+
+
+
+
+    <title> 手机不在身边如何二步验证 - 蓝雨衣 </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">蓝雨衣</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          手机不在身边如何二步验证
+        
+      </h1>
+
+      <time class="post-time">
+          Oct 20 2016
+      </time>
+    </header>
+
+	<div class="post-toc" id="post-toc">
+    <h4>Contents</h4>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#motivation"><span class="toc-text"> Motivation</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#问题分析"><span class="toc-text"> 问题分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#如何找自己的密钥"><span class="toc-text"> 如何找自己的密钥</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#用-authenticator-生成验证码"><span class="toc-text"> 用 Authenticator 生成验证码</span></a></li></ol>
+    </div>
+  </div>
+            <div class="post-content">
+            <pre><code>本文给出了一个只需使用桌面浏览器就可以二步验证的方案。
+</code></pre>
+<p>二步验证（2-Factor Authentication，2FA）已在各种隐私敏感应用中使用。因为比传统的账号+密码多了一层验证，各大网站也是推荐用户采取 2FA 来保护自己，我校近期也强制切换到了 2FA 系统。普遍 2FA 的方法是由验证器生成一个一次性的验证码，一般是6位数字。有效期只有30秒，过期便需要重新生成一个验证码。用户登录除了需要传统的账户密码，还得有这个实时生成的验证码才可以。验证器可以是一个手机 app，或者通过短信，打电话来传递。</p>
+<h5 id="motivation"><a class="markdownIt-Anchor" href="#motivation"></a> Motivation</h5>
+<p>这篇文章的由来也是有一个 motivating problem 的，学校给学生登录账户的 2FA 提供了四种方案：</p>
+<ol>
+<li>安装一个手机app（名字叫DUO）。经过一堆设置后，每次登录发送一个 push 到手机，点击同意即登录。</li>
+<li>短信</li>
+<li>打电话</li>
+<li>直接填入6位验证码登录</li>
+</ol>
+<p>前三种方案对一个没有手机（或手机经常不在身边）的人是非常不友好的，比如我老板 _(:з」∠)_ 。因而，需要迫切需要一个没有手机还能 2FA 的方案。</p>
+<h5 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h5>
+<p>之前<a href="http://blog.fangzhou.me/2016-08-16">折腾1Password</a>(但那篇文章并未提及 1P 的这个小 feature)了解到了 One-Time Password（OTP）机制。这个 OTP 验证码的生成算法是公开的，已被标准化，任何人只需持有原始的密钥，便可以任意时候生成实时验证码。大多数 OTP 都是基于时间的，故而叫做 TOTP。</p>
+<p>为了解决 motivating problem，我们需要做两件事：1） 找到自己的密钥，2）找到一个桌面可使用的 authenticator（即验证码生成器）。</p>
+<h5 id="如何找自己的密钥"><a class="markdownIt-Anchor" href="#如何找自己的密钥"></a> 如何找自己的密钥</h5>
+<p>登录自己的<a href="https://my.vt.edu/accounts/myaccounts" target="_blank" rel="noopener">学校账户管理页</a>，注意这一步本身也是需要 2FA 的。接下来可以参照<a href="https://vt4help.service-now.com/kb_view_customer.do?sysparm_article=KB0010700#enrollwinauth" target="_blank" rel="noopener">此网页</a> 的 Enrolling the WinAuth Software 标题下的 Step 6-7。网页会显示一个二维码密钥，就是我们想找的。</p>
+<p>同理，设置其他采用 2FA 的网站，也需要找到一张类似的二维码图。这张图包含了用户的 2FA 密钥，所以一定要妥善保存。</p>
+<h5 id="用-authenticator-生成验证码"><a class="markdownIt-Anchor" href="#用-authenticator-生成验证码"></a> 用 Authenticator 生成验证码</h5>
+<p>因为所有的 TOTP Authenticator 都是基于同一个算法，所以我们只需找到一个可以采用 TOTP 算法并支持扫码的软件即可。桌面端我自己用的 1Password 已经集成了 OTP 功能。对于不使用 1Password 的人，我们还需要一个更便捷的软件。比如 <a href="https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai/reviews" target="_blank" rel="noopener">Authenticator</a> 是一款 Chrome 扩展，就非常好用。BTW, 作者是国人，而且软件开了源，赞一个。这个扩展几乎一看就会使用，这里就不赘述了。</p>
+<p>如此，每次登录 2FA 账户，便无需手机在身旁。打开 authenticator 随时复制粘贴验证码即可。</p>
+<p>需要重视一点，为了安全，一定要妥善保存自己的密钥，也应避免别人可以随意接触到自己的（即使是）实时的验证码。</p>
+
+            </div>
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-tags">
+          
+            <a href="/tags/折腾/">折腾</a>
+          
+       </div>
+
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/posts/20170218-article/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">几则小故事 (1)</span>
+        <span class="prev-text nav-mobile">Prev</span>
+      </a>
+    
+    
+      <a class="next" href="/posts/20161019-2016-fall-concert/">
+        <span class="next-text nav-default">2016 Fall Concert</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+    <div style="text-align:center;">
+        <button class="button" id="load-disqus" onclick="disqus.load();">Load Disqus </button>
+    </div>
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2011 -
+    
+    2019
+    <span class="footer-author">F. Sun</span>
+
+    
+
+</span>
+
+      </footer>
+
+      <a class="back-to-top" onclick="topFunction()" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </a>
+    </div>
+
+    
+
+<script type="text/javascript">
+  var disqus_shortname = 'fsun';
+  var disqus_identifier = 'posts/20161020-2-factor-authentication-without-cellphone/';
+
+  var disqus_title = "手机不在身边如何二步验证";
+
+
+  var disqus = {
+    load : function disqus(){
+        if(typeof DISQUS !== 'object') {
+          (function () {
+          var s = document.createElement('script'); s.async = true;
+          s.type = 'text/javascript';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+          }());
+          document.getElementById("load-disqus").remove(); // 加载后移除按钮
+      }
+    }
+  }
+
+  
+    var disqus_config = function () {
+        this.page.url = disqus_url;
+        this.page.identifier = disqus_identifier;
+        this.page.title = disqus_title;
+    };
+  
+
+</script>
+
+
+    
+    <script type="text/javascript">
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("back-to-top").style.display = "block";
+  } else {
+    document.getElementById("back-to-top").style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
+function leftArrowPressed() {
+   prevUrl = document.getElementsByClassName("prev")[0].href
+   window.location.assign(prevUrl)
+}
+
+function rightArrowPressed() {
+  nextUrl = document.getElementsByClassName("next")[0].href
+   window.location.assign(nextUrl)
+}
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    switch (evt.keyCode) {
+        case 37:
+            leftArrowPressed();
+            break;
+        case 39:
+            rightArrowPressed();
+            break;
+    }
+};
+</script>
+
+    
+
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-49265936-4', 'auto');
+        ga('send', 'pageview');
+  </script>
+
+  </body>
+</html>

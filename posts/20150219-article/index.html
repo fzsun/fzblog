@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang>
+<html lang class="has-navbar-fixed-top">
   <head><meta name="generator" content="Hexo 3.8.0">
     
 <meta charset="UTF-8">
@@ -53,16 +53,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.css">
 <link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_38tomuzattr.css">
 
-  
-  <script type="text/javascript">
-    var themeConfig = {
-      fancybox: {
-        enable: false
-      },
-    };
-  </script>
-
-
 
 
 
@@ -70,58 +60,56 @@
   </head>
 
   <body>
-    <div id="page">
-      <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">蓝雨衣</a>
-    </h1>
-
-    <nav id="nav-top">
+    <header class="section"><nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+  <div class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/.">
+        蓝雨衣
+      </a>
+    </div>
+    <div class="navbar-end">
+    
         
-            <ul id="menu-top" class="nav-top-items">
+            <a class="navbar-item is-tab" href="/archives">
                 
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
                 
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
+                    Archives
                 
-            </ul>
+            </a>
         
-  </nav>
-</div>
+            <a class="navbar-item is-tab" href="/about">
+                
+                
+                    About
+                
+            </a>
+        
+    
+    </div>
+  </div>
+</nav>
 
-      </header>
-      <div id="content">
-        
-    <div id="primary">
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          猴子打字
-        
-      </h1>
-
-      <time class="post-time">
-          Feb 19 2015
-      </time>
     </header>
 
-	
+    <div class="section" id="content">
+        
+<div class="columns">
+    <div class="column is-9" id="primary">
+        <div class="content">
+        
+    <article class="post">
+      <header class="post-header">
+        <div class="post-title">
+          
+            猴子打字
+          
+        </div>
+        <time class="post-time">
+            Feb 19 2015
+        </time>
+      </header>
+
+    
             <div class="post-content">
             <p>Random Process 课上提到一个很有趣的问题：Mean Time for Patterns. 假设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi><mo>=</mo><mo>(</mo><msub><mi>X</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>X</mi><mn>2</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">X=(X_1,X_2,...)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mclose">)</span></span></span></span> 是一串有序的iid（独立且同分布，independent and identically distributed）离散随机变量。pdf（概率密度函数）已知，为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>i</mi></msub><mo>=</mo><mi>P</mi><mo>(</mo><msub><mi>X</mi><mi>j</mi></msub><mo>=</mo><mi>i</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">p_i=P(X_j=i)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mclose">)</span></span></span></span> 。如果我们对这串变量中的某一段特定排序的变量（称作模式pattern）感兴趣，问题就是，如何计算出此pattern最早在变量串中出现的位置的期望。</p>
 <p>这几乎让我立即想到（很无厘头的）<strong>无限猴子定理</strong>：“让一只猴子在打字机上随机地按键，当按键时间达到无穷时，几乎必然能够打出任何给定的文字，比如莎士比亚全集”。在这个定理里，猴子随机打出的字母就是iid离散随机变量，莎士比亚全集就是我们要寻找的pattern。</p>
@@ -142,25 +130,25 @@
     
 
     
-      <footer class="post-footer">
-        <div class="post-tags">
+      <div class="post-footer">
+        <div class="tags">
           
-            <a href="/tags/折腾/">折腾</a>
+            <a class="tag is-primary is-rounded" href="/tags/折腾/">折腾</a>
           
        </div>
 
         
         
-  <nav class="post-nav">
+  <nav class="post-nav pagination">
     
-      <a class="prev" href="/posts/20150311-the-great-smoky-moutains/">
+      <a class="pagination-previous" href="/posts/20150311-the-great-smoky-moutains/">
         <i class="iconfont icon-left"></i>
         <span class="prev-text nav-default">Great Smoky Moutains</span>
         <span class="prev-text nav-mobile">Prev</span>
       </a>
     
     
-      <a class="next" href="/posts/20150128-article/">
+      <a class="pagination-next" href="/posts/20150128-article/">
         <span class="next-text nav-default">2014年观影十佳</span>
         <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
@@ -169,30 +157,38 @@
   </nav>
 
         
-  <div class="comments" id="comments">
-    
-    <div style="text-align:center;">
-        <button class="button" id="load-disqus" onclick="disqus.load();">Load Disqus </button>
-    </div>
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+
+<div class="comments" id="comments">
+    <div id="vcomments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments' ,
+            appId: '0Kg4nfVVDNlSkugkA0meEIy9-gzGzoHsz',
+            appKey: 'yCYv0a0B6QIAJYgLzCxgsHOh',
+            notify: true,
+            avatar:'mp',
+            placeholder: '来啊，吐槽一番！',
+            visitor: true,
+        });
+    </script>
+</div>
+
+
       </div>
     
-  </div>
 
+    </article>
 
-      </footer>
+        </div>
+    </div>
     
-  </article>
+</div>
 
     </div>
 
-      </div>
-
-      <footer id="colophon"><span class="copyright-year">
+    <footer class="footer"><div class="content has-text-centered">
     
         &copy;
     
@@ -202,51 +198,14 @@
     <span class="footer-author">F. Sun</span>
 
     
+</div>
 
-</span>
+    </footer>
 
-      </footer>
+    <a class="back-to-top" onclick="topFunction()" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </a>
 
-      <a class="back-to-top" onclick="topFunction()" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </a>
-    </div>
-
-    
-
-<script type="text/javascript">
-  var disqus_shortname = 'fsun';
-  var disqus_identifier = 'posts/20150219-article/';
-
-  var disqus_title = "猴子打字";
-
-
-  var disqus = {
-    load : function disqus(){
-        if(typeof DISQUS !== 'object') {
-          (function () {
-          var s = document.createElement('script'); s.async = true;
-          s.type = 'text/javascript';
-          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-          }());
-          document.getElementById("load-disqus").remove(); // 加载后移除按钮
-      }
-    }
-  }
-
-  
-    var disqus_config = function () {
-        this.page.url = disqus_url;
-        this.page.identifier = disqus_identifier;
-        this.page.title = disqus_title;
-    };
-  
-
-</script>
-
-
-    
     <script type="text/javascript">
 window.onscroll = function() {scrollFunction()};
 
@@ -265,12 +224,12 @@ function topFunction() {
 }
 
 function leftArrowPressed() {
-   prevUrl = document.getElementsByClassName("prev")[0].href
+   prevUrl = document.getElementsByClassName("pagination-previous")[0].href
    window.location.assign(prevUrl)
 }
 
 function rightArrowPressed() {
-  nextUrl = document.getElementsByClassName("next")[0].href
+  nextUrl = document.getElementsByClassName("pagination-next")[0].href
    window.location.assign(nextUrl)
 }
 
@@ -288,7 +247,6 @@ document.onkeydown = function(evt) {
 </script>
 
     
-
   <script type="text/javascript">
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

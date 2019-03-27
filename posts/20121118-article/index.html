@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang>
+<html lang class="has-navbar-fixed-top">
   <head><meta name="generator" content="Hexo 3.8.0">
     
 <meta charset="UTF-8">
@@ -53,16 +53,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.css">
 <link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_38tomuzattr.css">
 
-  
-  <script type="text/javascript">
-    var themeConfig = {
-      fancybox: {
-        enable: false
-      },
-    };
-  </script>
-
-
 
 
 
@@ -70,58 +60,56 @@
   </head>
 
   <body>
-    <div id="page">
-      <header id="masthead"><div class="site-header-inner">
-    <h1 class="site-title">
-        <a href="/." class="logo">蓝雨衣</a>
-    </h1>
-
-    <nav id="nav-top">
+    <header class="section"><nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+  <div class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/.">
+        蓝雨衣
+      </a>
+    </div>
+    <div class="navbar-end">
+    
         
-            <ul id="menu-top" class="nav-top-items">
+            <a class="navbar-item is-tab" href="/archives">
                 
-                    <li class="menu-item">
-                        <a href="/archives">
-                            
-                            
-                                Archives
-                            
-                        </a>
-                    </li>
                 
-                    <li class="menu-item">
-                        <a href="/about">
-                            
-                            
-                                About
-                            
-                        </a>
-                    </li>
+                    Archives
                 
-            </ul>
+            </a>
         
-  </nav>
-</div>
+            <a class="navbar-item is-tab" href="/about">
+                
+                
+                    About
+                
+            </a>
+        
+    
+    </div>
+  </div>
+</nav>
 
-      </header>
-      <div id="content">
-        
-    <div id="primary">
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          扯一淡
-        
-      </h1>
-
-      <time class="post-time">
-          Nov 18 2012
-      </time>
     </header>
 
-	
+    <div class="section" id="content">
+        
+<div class="columns">
+    <div class="column is-9" id="primary">
+        <div class="content">
+        
+    <article class="post">
+      <header class="post-header">
+        <div class="post-title">
+          
+            扯一淡
+          
+        </div>
+        <time class="post-time">
+            Nov 18 2012
+        </time>
+      </header>
+
+    
             <div class="post-content">
             <p>大巴为了喜迎斯巴达，捂住了所有人的嘴巴。殊不知当下意识形态的主战场在围脖，围脖那么不和谐都没啥事，大巴你这个小呆|逼。这段时间俺就受尽苦头了，无数次提手怒码的火苗，被无数次浇灭。言论自|由这么郑智正确的主张，何时才能实现。我看好天朝与土|共，他的一些思想我还是比较信服的。身边不同意见的同学其实也蛮多，见解的成熟程度各不相同，我也愿意与那些不同意见的人和平相处。</p>
 <p>看到一则新闻，大抵云国内有些人不要走西方资本主义的邪路。俺想着，正准备出国长见识的当口，咋就平白无故中了一枪捏。为无数挤破脑袋从正路走歪到邪路上的人默哀。我不知道为什么席主习和理总李，早在N年前就定为了太子。我甚至还记得那时的“成外第一猥男”张登奎在我高一还是高二的课上信誓旦旦地告诉我们，下一届领导就是习和李。当时真觉特么扯淡啊。后来知道仅从郑智局常|委的人选，还有什么副主|席、副总|理的任命就能看出一些端倪的。五年后下一届太子自会浮现出来。</p>
@@ -134,25 +122,25 @@
     
 
     
-      <footer class="post-footer">
-        <div class="post-tags">
+      <div class="post-footer">
+        <div class="tags">
           
-            <a href="/tags/怪话/">怪话</a>
+            <a class="tag is-primary is-rounded" href="/tags/怪话/">怪话</a>
           
        </div>
 
         
         
-  <nav class="post-nav">
+  <nav class="post-nav pagination">
     
-      <a class="prev" href="/posts/20121208-article/">
+      <a class="pagination-previous" href="/posts/20121208-article/">
         <i class="iconfont icon-left"></i>
         <span class="prev-text nav-default">父亲</span>
         <span class="prev-text nav-mobile">Prev</span>
       </a>
     
     
-      <a class="next" href="/posts/20121021-article/">
+      <a class="pagination-next" href="/posts/20121021-article/">
         <span class="next-text nav-default">关于如何让电脑优雅</span>
         <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
@@ -161,30 +149,38 @@
   </nav>
 
         
-  <div class="comments" id="comments">
-    
-    <div style="text-align:center;">
-        <button class="button" id="load-disqus" onclick="disqus.load();">Load Disqus </button>
-    </div>
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+
+<div class="comments" id="comments">
+    <div id="vcomments"></div>
+    <script>
+        new Valine({
+            el: '#vcomments' ,
+            appId: '0Kg4nfVVDNlSkugkA0meEIy9-gzGzoHsz',
+            appKey: 'yCYv0a0B6QIAJYgLzCxgsHOh',
+            notify: true,
+            avatar:'mp',
+            placeholder: '来啊，吐槽一番！',
+            visitor: true,
+        });
+    </script>
+</div>
+
+
       </div>
     
-  </div>
 
+    </article>
 
-      </footer>
+        </div>
+    </div>
     
-  </article>
+</div>
 
     </div>
 
-      </div>
-
-      <footer id="colophon"><span class="copyright-year">
+    <footer class="footer"><div class="content has-text-centered">
     
         &copy;
     
@@ -194,51 +190,14 @@
     <span class="footer-author">F. Sun</span>
 
     
+</div>
 
-</span>
+    </footer>
 
-      </footer>
+    <a class="back-to-top" onclick="topFunction()" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </a>
 
-      <a class="back-to-top" onclick="topFunction()" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </a>
-    </div>
-
-    
-
-<script type="text/javascript">
-  var disqus_shortname = 'fsun';
-  var disqus_identifier = 'posts/20121118-article/';
-
-  var disqus_title = "扯一淡";
-
-
-  var disqus = {
-    load : function disqus(){
-        if(typeof DISQUS !== 'object') {
-          (function () {
-          var s = document.createElement('script'); s.async = true;
-          s.type = 'text/javascript';
-          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-          }());
-          document.getElementById("load-disqus").remove(); // 加载后移除按钮
-      }
-    }
-  }
-
-  
-    var disqus_config = function () {
-        this.page.url = disqus_url;
-        this.page.identifier = disqus_identifier;
-        this.page.title = disqus_title;
-    };
-  
-
-</script>
-
-
-    
     <script type="text/javascript">
 window.onscroll = function() {scrollFunction()};
 
@@ -257,12 +216,12 @@ function topFunction() {
 }
 
 function leftArrowPressed() {
-   prevUrl = document.getElementsByClassName("prev")[0].href
+   prevUrl = document.getElementsByClassName("pagination-previous")[0].href
    window.location.assign(prevUrl)
 }
 
 function rightArrowPressed() {
-  nextUrl = document.getElementsByClassName("next")[0].href
+  nextUrl = document.getElementsByClassName("pagination-next")[0].href
    window.location.assign(nextUrl)
 }
 
@@ -280,7 +239,6 @@ document.onkeydown = function(evt) {
 </script>
 
     
-
   <script type="text/javascript">
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -1,4 +1,29 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Noto+Serif+SC:500,700");
+@font-face {
+  font-family: 'Linux Biolinum';
+  src: url("/fonts/LinBiolinum_Rah.eot");
+  font-display: swap;
+  src: url("/fonts/LinBiolinum_Rah.eot") format("embedded-opentype"), url("/fonts/LinBiolinum_Rah.woff2") format("woff2"), url("/fonts/LinBiolinum_Rah.woff") format("woff"), url("/fonts/LinBiolinum_Rah.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Linux Biolinum';
+  src: url("/fonts/LinBiolinum_RBah.eot");
+  font-display: swap;
+  src: url("/fonts/LinBiolinum_RBah.eot") format("embedded-opentype"), url("/fonts/LinBiolinum_RBah.woff2") format("woff2"), url("/fonts/LinBiolinum_RBah.woff") format("woff"), url("/fonts/LinBiolinum_RBah.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Linux Biolinum';
+  src: url("/fonts/LinBiolinum_RIah.eot");
+  font-display: swap;
+  src: url("/fonts/LinBiolinum_RIah.eot") format("embedded-opentype"), url("/fonts/LinBiolinum_RIah.woff2") format("woff2"), url("/fonts/LinBiolinum_RIah.woff") format("woff"), url("/fonts/LinBiolinum_RIah.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic; }
+
 /*! bulma.io v0.7.4 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
   from {
@@ -296,7 +321,7 @@ button,
 input,
 select,
 textarea {
-  font-family: "Linux Biolinum", Georgia, "Songti SC", SimSun, serif; }
+  font-family: "Linux Biolinum", Georgia, "Noto Serif SC", "Songti SC", SimSun, serif; }
 
 code,
 pre {
@@ -307,7 +332,7 @@ pre {
 body {
   color: #333;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.8; }
 
 a {

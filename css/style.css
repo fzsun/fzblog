@@ -7061,10 +7061,10 @@ h6 {
   padding-bottom: .2em; }
 
 h1 {
-  border-bottom: 1px solid silver; }
+  border-bottom: 1px solid #ddd; }
 
 h2 {
-  border-bottom: 1px dashed silver; }
+  border-bottom: 1px dashed #ddd; }
 
 h5,
 h6 {
@@ -7073,7 +7073,7 @@ h6 {
 .post {
   padding-top: 1.5em;
   margin-top: 1.5em;
-  border-top: 1px solid silver; }
+  border-top: 1px solid #ddd; }
 
 article:first-child {
   padding-top: 0;
@@ -7099,7 +7099,7 @@ article:first-child {
   margin: 0 auto; }
 
 .navbar {
-  border-bottom: 1px solid silver; }
+  border-bottom: 1px solid #ddd; }
 
 .navbar-start {
   padding-left: 12px; }
@@ -7241,7 +7241,7 @@ article:first-child {
 
 .footer {
   padding: 2rem;
-  border-top: 1px solid silver;
+  border-top: 1px solid #ddd;
   max-width: 800px;
   margin: 2rem auto; }
 

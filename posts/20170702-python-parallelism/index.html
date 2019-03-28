@@ -122,18 +122,18 @@
             <div class="post-content">
             <p>最近写 automation tool，需要用 Python 处理百万行的data frame。本着能不折腾就不折腾，并不打算并行化。起初写的一两个工具将就还能在十分钟内跑完，到后面多个表格交叉查询，即使已经尽量向量化了操作，运行时间还是相当感人。只能从并行计算上下功夫。</p>
 <p>Python 的几个向量化函数 <a href="https://docs.python.org/3.7/library/functions.html#map" target="_blank" rel="noopener">map</a>， <a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.apply.html" target="_blank" rel="noopener">pandas.DataFrame.apply</a>， 从原理上讲，非常适合并行化。它们都是对一列数据应用相同的函数，数据之间互相独立，完全可以把一列数据拆分成子列，再并行地计算这些子列，从而达到加速。</p>
-<h3>野教程的痛点</h3>
+<h3 id="野教程的痛点"><a class="anchor" href="#野教程的痛点"></a>野教程的痛点</h3>
 <p>关于 Python 的并行化，网络上的野教程到处都是。然而对 map, apply, applymap 这类特殊函数的并行化，野教程们讲的并不好，如同鸡肋。我的需求其实很简单，就两点：</p>
 <ol>
 <li>一个极简的，可运行的，insightful 的代码示例</li>
 <li>代码示例可以充分展现 Python 并行化的好处</li>
 </ol>
 <p>几乎没有看到一个满足了以上两个痛点的野教程。于是，又一篇（野）教程出炉了。</p>
-<h3>Python 并行化</h3>
+<h3 id="python-并行化"><a class="anchor" href="#python-并行化"></a>Python 并行化</h3>
 <p>并行化一个代码有两大选择：multithread 和 multiprocess。</p>
 <p>Multithread，多线程，同一个进程（process）可以开启多个线程执行计算。每个线程代表了一个 CPU 核心，这么多线程可以访问同样的内存地址（所谓共享内存），实现了线程之间的通讯，算是最简单的并行模型。 多线程显然是单机跑并行程序最自然的选择。然而，由于 Python 臭名昭著的 GIL（Global Interpreter Lock 全局解释器锁），一个防止多线程并发执行机器码的的机制，多线程计算几乎没有好处（数据IO是反例）。</p>
 <p>Multiprocess，多进程，则相当于同时开启多个 Python 解释器，每个解释器有自己独有的数据，自然不会有数据冲突。这篇文章，主要讲多进程的并行，只举并行 map, apply 等函数为例。</p>
-<h3>代码示例</h3>
+<h3 id="代码示例"><a class="anchor" href="#代码示例"></a>代码示例</h3>
 <p>先看一个简单的序列执行的示例代码。</p>
 <pre class="language-Python"><code class="language-Python">import numpy as np
 import pandas as pd
@@ -198,7 +198,7 @@ Parallel time = 6.046212196350098</p>
 </code></pre>
 <p>构建。其中，指定产生8个进程，每个进程的初始化需运行 <code>init_process</code> 函数，其参数为一个 singleton tuple <code>a</code>. 利用 <code>init_process</code> 和 <code>initargs</code>，我们可以方便的设定需要在进程间共享的全局变量（这里是 <code>a</code>）。</p>
 <p><code>with</code> 关键词是 <a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/" target="_blank" rel="noopener">context manager</a>，用 context manager 来处理 Pool 非常方便，只需要一个 <code>with</code> 就行了。否则，就需要写很繁琐的处理开关进程的逻辑。</p>
-<h3>总结</h3>
+<h3 id="总结"><a class="anchor" href="#总结"></a>总结</h3>
 <p>本文举例用最简单的 multiprocessing.Pool 来并行化 map， pandas.DataFrame.apply 等函数。例子显示，并行化确实加速了执行。示例亦包含了常见的多进程之间共享全局变量的情形。更复杂的并行化说明，应当参考 Python 的多进程标准库 <a href="https://docs.python.org/3.7/library/multiprocessing.html" target="_blank" rel="noopener">multiprocessing</a>.</p>
 
             </div>
@@ -261,9 +261,9 @@ Parallel time = 6.046212196350098</p>
     
     <div class="column" id="secondary">
         <div class="post-toc">
-            <h4>Contents</h4>
+            <div class="toc-title">Contents</div>
             <div class="post-toc-content">
-                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">野教程的痛点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">Python 并行化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">代码示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">总结</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#野教程的痛点"><span class="toc-text">野教程的痛点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-并行化"><span class="toc-text">Python 并行化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码示例"><span class="toc-text">代码示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
             </div>
         </div>
     </div>

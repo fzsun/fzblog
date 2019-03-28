@@ -123,7 +123,7 @@
             <pre><code>本文给出了一个只需使用桌面浏览器就可以二步验证的方案。
 </code></pre>
 <p>二步验证（2-Factor Authentication，2FA）已在各种隐私敏感应用中使用。因为比传统的账号+密码多了一层验证，各大网站也是推荐用户采取 2FA 来保护自己，我校近期也强制切换到了 2FA 系统。普遍 2FA 的方法是由验证器生成一个一次性的验证码，一般是6位数字。有效期只有30秒，过期便需要重新生成一个验证码。用户登录除了需要传统的账户密码，还得有这个实时生成的验证码才可以。验证器可以是一个手机 app，或者通过短信，打电话来传递。</p>
-<h5>Motivation</h5>
+<h5 id="motivation"><a class="anchor" href="#motivation"></a>Motivation</h5>
 <p>这篇文章的由来也是有一个 motivating problem 的，学校给学生登录账户的 2FA 提供了四种方案：</p>
 <ol>
 <li>安装一个手机app（名字叫DUO）。经过一堆设置后，每次登录发送一个 push 到手机，点击同意即登录。</li>
@@ -132,13 +132,13 @@
 <li>直接填入6位验证码登录</li>
 </ol>
 <p>前三种方案对一个没有手机（或手机经常不在身边）的人是非常不友好的，比如我老板 _(:з」∠)_ 。因而，需要迫切需要一个没有手机还能 2FA 的方案。</p>
-<h5>问题分析</h5>
+<h5 id="问题分析"><a class="anchor" href="#问题分析"></a>问题分析</h5>
 <p>之前<a href="http://blog.fangzhou.me/2016-08-16">折腾1Password</a>(但那篇文章并未提及 1P 的这个小 feature)了解到了 One-Time Password（OTP）机制。这个 OTP 验证码的生成算法是公开的，已被标准化，任何人只需持有原始的密钥，便可以任意时候生成实时验证码。大多数 OTP 都是基于时间的，故而叫做 TOTP。</p>
 <p>为了解决 motivating problem，我们需要做两件事：1） 找到自己的密钥，2）找到一个桌面可使用的 authenticator（即验证码生成器）。</p>
-<h5>如何找自己的密钥</h5>
+<h5 id="如何找自己的密钥"><a class="anchor" href="#如何找自己的密钥"></a>如何找自己的密钥</h5>
 <p>登录自己的<a href="https://my.vt.edu/accounts/myaccounts" target="_blank" rel="noopener">学校账户管理页</a>，注意这一步本身也是需要 2FA 的。接下来可以参照<a href="https://vt4help.service-now.com/kb_view_customer.do?sysparm_article=KB0010700#enrollwinauth" target="_blank" rel="noopener">此网页</a> 的 Enrolling the WinAuth Software 标题下的 Step 6-7。网页会显示一个二维码密钥，就是我们想找的。</p>
 <p>同理，设置其他采用 2FA 的网站，也需要找到一张类似的二维码图。这张图包含了用户的 2FA 密钥，所以一定要妥善保存。</p>
-<h5>用 Authenticator 生成验证码</h5>
+<h5 id="用-authenticator-生成验证码"><a class="anchor" href="#用-authenticator-生成验证码"></a>用 Authenticator 生成验证码</h5>
 <p>因为所有的 TOTP Authenticator 都是基于同一个算法，所以我们只需找到一个可以采用 TOTP 算法并支持扫码的软件即可。桌面端我自己用的 1Password 已经集成了 OTP 功能。对于不使用 1Password 的人，我们还需要一个更便捷的软件。比如 <a href="https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai/reviews" target="_blank" rel="noopener">Authenticator</a> 是一款 Chrome 扩展，就非常好用。BTW, 作者是国人，而且软件开了源，赞一个。这个扩展几乎一看就会使用，这里就不赘述了。</p>
 <p>如此，每次登录 2FA 账户，便无需手机在身旁。打开 authenticator 随时复制粘贴验证码即可。</p>
 <p>需要重视一点，为了安全，一定要妥善保存自己的密钥，也应避免别人可以随意接触到自己的（即使是）实时的验证码。</p>
@@ -203,9 +203,9 @@
     
     <div class="column" id="secondary">
         <div class="post-toc">
-            <h4>Contents</h4>
+            <div class="toc-title">Contents</div>
             <div class="post-toc-content">
-                <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-text">如何找自己的密钥</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#undefined"><span class="toc-text">用 Authenticator 生成验证码</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#motivation"><span class="toc-text">Motivation</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#问题分析"><span class="toc-text">问题分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#如何找自己的密钥"><span class="toc-text">如何找自己的密钥</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#用-authenticator-生成验证码"><span class="toc-text">用 Authenticator 生成验证码</span></a></li></ol>
             </div>
         </div>
     </div>

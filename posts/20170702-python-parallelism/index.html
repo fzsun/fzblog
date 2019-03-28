@@ -53,7 +53,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.css">
 <link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_38tomuzattr.css">
 
-
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'wqu5pou',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
 
 
     <title> 并行化 Python 中的 map, apply 等函数，aka 最简单的 Python 并行方案（示例及时间对比） - 蓝雨衣 </title>
@@ -113,83 +122,83 @@
             <div class="post-content">
             <p>最近写 automation tool，需要用 Python 处理百万行的data frame。本着能不折腾就不折腾，并不打算并行化。起初写的一两个工具将就还能在十分钟内跑完，到后面多个表格交叉查询，即使已经尽量向量化了操作，运行时间还是相当感人。只能从并行计算上下功夫。</p>
 <p>Python 的几个向量化函数 <a href="https://docs.python.org/3.7/library/functions.html#map" target="_blank" rel="noopener">map</a>， <a href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.apply.html" target="_blank" rel="noopener">pandas.DataFrame.apply</a>， 从原理上讲，非常适合并行化。它们都是对一列数据应用相同的函数，数据之间互相独立，完全可以把一列数据拆分成子列，再并行地计算这些子列，从而达到加速。</p>
-<h3 id="野教程的痛点"><a class="markdownIt-Anchor" href="#野教程的痛点"></a> 野教程的痛点</h3>
+<h3>野教程的痛点</h3>
 <p>关于 Python 的并行化，网络上的野教程到处都是。然而对 map, apply, applymap 这类特殊函数的并行化，野教程们讲的并不好，如同鸡肋。我的需求其实很简单，就两点：</p>
 <ol>
 <li>一个极简的，可运行的，insightful 的代码示例</li>
 <li>代码示例可以充分展现 Python 并行化的好处</li>
 </ol>
 <p>几乎没有看到一个满足了以上两个痛点的野教程。于是，又一篇（野）教程出炉了。</p>
-<h3 id="python-并行化"><a class="markdownIt-Anchor" href="#python-并行化"></a> Python 并行化</h3>
+<h3>Python 并行化</h3>
 <p>并行化一个代码有两大选择：multithread 和 multiprocess。</p>
 <p>Multithread，多线程，同一个进程（process）可以开启多个线程执行计算。每个线程代表了一个 CPU 核心，这么多线程可以访问同样的内存地址（所谓共享内存），实现了线程之间的通讯，算是最简单的并行模型。 多线程显然是单机跑并行程序最自然的选择。然而，由于 Python 臭名昭著的 GIL（Global Interpreter Lock 全局解释器锁），一个防止多线程并发执行机器码的的机制，多线程计算几乎没有好处（数据IO是反例）。</p>
 <p>Multiprocess，多进程，则相当于同时开启多个 Python 解释器，每个解释器有自己独有的数据，自然不会有数据冲突。这篇文章，主要讲多进程的并行，只举并行 map, apply 等函数为例。</p>
-<h3 id="代码示例"><a class="markdownIt-Anchor" href="#代码示例"></a> 代码示例</h3>
+<h3>代码示例</h3>
 <p>先看一个简单的序列执行的示例代码。</p>
-<pre class="hljs"><code class="Python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
-<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
-<span class="hljs-keyword">import</span> time
+<pre class="language-Python"><code class="language-Python">import numpy as np
+import pandas as pd
+import time
  
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f</span><span class="hljs-params">(row)</span>:</span>
-    <span class="hljs-keyword">return</span> sum(row)+a
+def f(row):
+    return sum(row)+a
 
-a = <span class="hljs-number">2</span>   
-np.random.seed(<span class="hljs-number">0</span>)    
-df = pd.DataFrame(np.random.rand(<span class="hljs-number">10</span>**<span class="hljs-number">6</span>,<span class="hljs-number">10</span>))   
+a = 2   
+np.random.seed(0)    
+df = pd.DataFrame(np.random.rand(10**6,10))   
 
 t1= time.time()
-result_serial = df.apply(f,axis=<span class="hljs-number">1</span>)
+result_serial = df.apply(f,axis=1)
 t2 = time.time()
-print(<span class="hljs-string">"Serial time ="</span>,t2-t1)
+print(&quot;Serial time =&quot;,t2-t1)
 </code></pre>
 <p>以上代码的本质是输入一个表格（<code>$10^6 \times 10$</code>），对表格的每一行执行函数 <code>f</code> 操作，将结果输出成另一个表格。最要紧的一步，是 <code>result_serial = df.apply(f,axis=1)</code>，对表格 <code>df</code> 的每一行执行函数 <code>f</code> 。执行这句代码，在我的电脑上花了22.2秒。</p>
 <p>如何使用多进程加速代码的运行呢？以下是多进程的代码。</p>
-<pre class="hljs"><code class="Python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
-<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
-<span class="hljs-keyword">import</span> time
-<span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Pool
+<pre class="language-Python"><code class="language-Python">import numpy as np
+import pandas as pd
+import time
+from multiprocessing import Pool
  
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f</span><span class="hljs-params">(row)</span>:</span>
-    <span class="hljs-keyword">return</span> sum(row)+a
+def f(row):
+    return sum(row)+a
  
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply_f</span><span class="hljs-params">(df)</span>:</span>
-    <span class="hljs-keyword">return</span> df.apply(f,axis=<span class="hljs-number">1</span>)
+def apply_f(df):
+    return df.apply(f,axis=1)
  
-<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init_process</span><span class="hljs-params">(global_vars)</span>:</span>
-    <span class="hljs-keyword">global</span> a
+def init_process(global_vars):
+    global a
     a = global_vars
    
-<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
-    a = <span class="hljs-number">2</span>
-    np.random.seed(<span class="hljs-number">0</span>)
-    df = pd.DataFrame(np.random.rand(<span class="hljs-number">10</span>**<span class="hljs-number">6</span>,<span class="hljs-number">10</span>))
+if __name__ == '__main__':
+    a = 2
+    np.random.seed(0)
+    df = pd.DataFrame(np.random.rand(10**6,10))
      
     t1= time.time()
-    result_serial = df.apply(f,axis=<span class="hljs-number">1</span>)
+    result_serial = df.apply(f,axis=1)
     t2 = time.time()
-    print(<span class="hljs-string">"Serial time ="</span>,t2-t1)
+    print(&quot;Serial time =&quot;,t2-t1)
     
-    df_parts=np.array_split(df,<span class="hljs-number">20</span>) 
-    <span class="hljs-keyword">with</span> Pool(processes=<span class="hljs-number">8</span>,initializer=init_process,initargs=(a,)) <span class="hljs-keyword">as</span> pool:        
+    df_parts=np.array_split(df,20) 
+    with Pool(processes=8,initializer=init_process,initargs=(a,)) as pool:        
         result_parts = pool.map(apply_f,df_parts)
 
     result_parallel = pd.concat(result_parts)
     t3 = time.time()
-    print(<span class="hljs-string">"Parallel time ="</span>,t3-t2)
+    print(&quot;Parallel time =&quot;,t3-t2)
 </code></pre>
 <p>输出</p>
 <blockquote>
-<p>Serial time = 22.184635877609253<br>
+<p>Serial time = 22.184635877609253
 Parallel time = 6.046212196350098</p>
 </blockquote>
 <p>可见，并行化在本例提升了至少3倍的运行速度。</p>
 <p>代码的变化是引入了多进程包 multiprocessing 的 Pool 类，我所知道最简单方便的并行方法。如果没有全局共享的变量 <code>a</code>， 代码还可以更简单。并行化的基本思路是把 dataframe 用 <code>np.array_split</code> 方法切割成多个子 dataframe。再调用 <code>Pool.map</code> 函数并行地执行。注意到顺序执行的 <code>pandas.DataFrame.apply</code> 是如何转化成 <code>Pool.map</code> 然后并行执行的。</p>
 <p>Pool 对象是一组并行的进程，由以上代码中的</p>
-<pre class="hljs"><code class="Python">Pool(processes=<span class="hljs-number">8</span>,initializer=init_process,initargs=(a,))
+<pre class="language-Python"><code class="language-Python">Pool(processes=8,initializer=init_process,initargs=(a,))
 </code></pre>
 <p>构建。其中，指定产生8个进程，每个进程的初始化需运行 <code>init_process</code> 函数，其参数为一个 singleton tuple <code>a</code>. 利用 <code>init_process</code> 和 <code>initargs</code>，我们可以方便的设定需要在进程间共享的全局变量（这里是 <code>a</code>）。</p>
 <p><code>with</code> 关键词是 <a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/" target="_blank" rel="noopener">context manager</a>，用 context manager 来处理 Pool 非常方便，只需要一个 <code>with</code> 就行了。否则，就需要写很繁琐的处理开关进程的逻辑。</p>
-<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<h3>总结</h3>
 <p>本文举例用最简单的 multiprocessing.Pool 来并行化 map， pandas.DataFrame.apply 等函数。例子显示，并行化确实加速了执行。示例亦包含了常见的多进程之间共享全局变量的情形。更复杂的并行化说明，应当参考 Python 的多进程标准库 <a href="https://docs.python.org/3.7/library/multiprocessing.html" target="_blank" rel="noopener">multiprocessing</a>.</p>
 
             </div>
@@ -254,7 +263,7 @@ Parallel time = 6.046212196350098</p>
         <div class="post-toc">
             <h4>Contents</h4>
             <div class="post-toc-content">
-                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#野教程的痛点"><span class="toc-text"> 野教程的痛点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-并行化"><span class="toc-text"> Python 并行化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码示例"><span class="toc-text"> 代码示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text"> 总结</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">野教程的痛点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">Python 并行化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">代码示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">总结</span></a></li></ol>
             </div>
         </div>
     </div>

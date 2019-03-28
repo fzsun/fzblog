@@ -53,7 +53,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.css">
 <link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_38tomuzattr.css">
 
-
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'wqu5pou',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
 
 
     <title> 收益管理经典模型 （二） Single Resource Model - 蓝雨衣 </title>
@@ -113,7 +122,7 @@
             <div class="post-content">
             <p>上一节，简单介绍了收益管理的背景。本节正式开始介绍收益管理中最简单的一类模型，single resource model。它只研究在某一个 leg 上如何实现最大化期望收益。</p>
 <p>为了更好的说清楚 single resource model，以下有必要正式地阐述主要假设。</p>
-<h3 id="假设"><a class="markdownIt-Anchor" href="#假设"></a> 假设</h3>
+<h3>假设</h3>
 <ul>
 <li>各个舱位(票价等级)共享同一个资源（座位）。这些舱位区别在于不同的折扣水平，和服务条款。</li>
 <li>每个需求都只为1，即不考虑团体预定。</li>
@@ -123,12 +132,12 @@
 </ul>
 <p>以上的假设又称作动态模型假设。既然有『动态』，肯定也有『静态』。静态模型假设主要是假定需求的到来严格按照从低到高的先后顺序，没有重叠。例如，出发前3个月到1个月，只有 Q 舱需求，1个月到半个月，只有 M 舱需求，出发前两周内，只有 Y 舱需求。如此，需求仿佛被『固定』下来了，『动态』相对于『静态』，则并不假定需求的先后顺序。</p>
 <p>静态需求模型有很多出名的算法，如 <a href="https://en.wikipedia.org/wiki/Expected_marginal_seat_revenue" target="_blank" rel="noopener">EMSR</a>。本文重点在动态模型，就不扯歪了。</p>
-<h3 id="问题描述"><a class="markdownIt-Anchor" href="#问题描述"></a> 问题描述</h3>
+<h3>问题描述</h3>
 <p>总共 <code>$C$</code> 个座位资源。 <code>$n$</code> 个舱位，各自的票价为 <code>$f_1 \geq f_2 \geq \dots \geq f_n$</code>. 总共 <code>$T$</code> 段时间，从前往后分别是 <code>$1,\dots,T$</code>.  舱位和时间的 index 分别用 <code>$j$</code>  和 <code>$t$</code> 表示。需求的到达是泊松过程，所以可以认为当时间划分的足够细，每一段时间内最多有一个需求到达。在时间段 <code>$t$</code> 内，各个舱位需求到达的概率为  <code>$p_{jt}$</code>。 没有需求到达的概率为 <code>$p_{0t}$</code>。那么对每个 <code>$t$</code> 必然有</p>
 <p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>p</mi><mrow><mi>j</mi><mi>t</mi></mrow></msub><mo>=</mo><mn>1</mn><mo>−</mo><msub><mi>p</mi><mrow><mn>0</mn><mi>t</mi></mrow></msub><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">\sum_{j=1}^n p_{jt} = 1 - p_{0t}.
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.0651740000000007em;vertical-align:-1.4137769999999998em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6513970000000007em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.4137769999999998em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">.</span></span></span></span></span></p>
 <p>我们的问题就是如何动态地控制各个舱位的开闭，使得期望收益最大化。</p>
-<h3 id="动态规划"><a class="markdownIt-Anchor" href="#动态规划"></a> 动态规划</h3>
+<h3>动态规划</h3>
 <p>动态模型（DP）可以很自然的用动态规划来表示。 用 <code>$V_t(x)$</code> 表示处于时间 <code>$t$</code> 时，还剩 <code>$x$</code> 个座位的最大期望收益。设定边界条件：</p>
 <p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mrow><mi>T</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>0</mn><mo separator="true">,</mo><mi>x</mi><mo>=</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><mi>C</mi><mo separator="true">,</mo></mrow><annotation encoding="application/x-tex">V_{T+1}(x) = 0,  x=0,1,\dots,C, 
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328331em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mpunct">,</span></span></span></span></span></p>
@@ -148,14 +157,14 @@ V_t(x) &amp;= \sum_{j=1}^n p_{jt} \cdot \max\Big\{ f_j+ V_{t+1}(x-1),  V_{t+1}(x
 <p>于是，很形象的，<code>$\Delta V_{t+1}(x)$</code> 在业界还有另一个名字，叫 bid price. 最优的策略是，任何时候，航司只接受票价高于 bid price 的舱位需求。</p>
 <p>DP 的计算可以用 back recursion，即从起飞日算起（此时的 <code>$V_{T+1}(x)=0$</code>），逐渐往早算，直至最早的时间（<code>$t=1$</code>）.</p>
 <p>具体的实施，是通过 DP，计算一个巨大的 bid price 表格，以剩余座位数为行，时间为列。对于任何一个到来的需求，只需要查找对应的 bid price，做一个比较，即可决定接受或拒绝该需求。</p>
-<h3 id="结构性质"><a class="markdownIt-Anchor" href="#结构性质"></a> 结构性质</h3>
+<h3>结构性质</h3>
 <p>Bid price <code>$\Delta V_{t}(x)$</code> 有两个重要的边际价值递减性质，在 DP 的运算中可以充分利用以加速。</p>
 <blockquote>
-<p>对任意 <code>$x$</code>  和 <code>$t$</code>， <code>$\Delta V_{t}(x)$</code> 满足：<br>
-(1) <code>$\Delta V_{t}(x+1) \leq \Delta V_{t}(x)$</code><br>
+<p>对任意 <code>$x$</code>  和 <code>$t$</code>， <code>$\Delta V_{t}(x)$</code> 满足：
+(1) <code>$\Delta V_{t}(x+1) \leq \Delta V_{t}(x)$</code>
 (2) <code>$\Delta V_{t+1}(x) \leq \Delta V_{t}(x)$</code></p>
 </blockquote>
-<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<h3>总结</h3>
 <p>对于动态模型，采用 DP 推导出的 bid price 控制，可以达到最优的期望收益。理论上，bid price 应当在每个需求到达后重新计算，以保持精确。实践中，一般将出发前的时间分段成大的几个 DCP (Data Collection Points)，只在每个 DCP 才更新 bid price。</p>
 <p>本文的模型只是很简单的 single-leg 模型。对很多大航司而言，大多数的票并不是按照一个 leg 一个 leg 卖的，而是打包成一个行程，比如从 A 到 B 到 C 的联程票。如何管理一个航班网络的座位资源，显然，问题变得复杂许多。下一节，将介绍考虑了网络效应的 network model。</p>
 
@@ -221,7 +230,7 @@ V_t(x) &amp;= \sum_{j=1}^n p_{jt} \cdot \max\Big\{ f_j+ V_{t+1}(x-1),  V_{t+1}(x
         <div class="post-toc">
             <h4>Contents</h4>
             <div class="post-toc-content">
-                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#假设"><span class="toc-text"> 假设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题描述"><span class="toc-text"> 问题描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态规划"><span class="toc-text"> 动态规划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结构性质"><span class="toc-text"> 结构性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text"> 总结</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">假设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">动态规划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">结构性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">总结</span></a></li></ol>
             </div>
         </div>
     </div>

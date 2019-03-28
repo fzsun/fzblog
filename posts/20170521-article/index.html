@@ -43,7 +43,7 @@
 <meta property="og:site_name" content="蓝雨衣">
 <meta property="og:description" content="早就知道知道将来一定会把博客搬到 Github. 想不到竟是今天。 farbox.com 据说未来不会再维护。他的作者显然把重心转移到了新的博客平台 bitcron.com. Bitcron 跟 farbox 的用法其实是差不多的。而最大的区别就是 bitcron 不再有免费版。farbox 其实并非免费，只不过5年才交一次费，而且很白菜价，几乎相当于免费。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-25T01:06:33.615Z">
+<meta property="og:updated_time" content="2019-03-25T01:06:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="博客搬家 — 从 FarBox 到 GitHub">
 <meta name="twitter:description" content="早就知道知道将来一定会把博客搬到 Github. 想不到竟是今天。 farbox.com 据说未来不会再维护。他的作者显然把重心转移到了新的博客平台 bitcron.com. Bitcron 跟 farbox 的用法其实是差不多的。而最大的区别就是 bitcron 不再有免费版。farbox 其实并非免费，只不过5年才交一次费，而且很白菜价，几乎相当于免费。">
@@ -53,7 +53,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.css">
 <link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_38tomuzattr.css">
 
-
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'wqu5pou',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
 
 
     <title> 博客搬家 — 从 FarBox 到 GitHub - 蓝雨衣 </title>
@@ -115,8 +124,8 @@
 <p><a href="http://www.farbox.com/" target="_blank" rel="noopener">farbox.com</a> 据说未来不会再维护。他的作者显然把重心转移到了新的博客平台 <a href="http://www.bitcron.com/" target="_blank" rel="noopener">bitcron.com</a>. Bitcron 跟 farbox 的用法其实是差不多的。而最大的区别就是 bitcron 不再有免费版。farbox 其实并非免费，只不过5年才交一次费，而且很白菜价，几乎相当于免费。</p>
 <p>Bitcron 目前还处于内测，前些天收到作者的邀请邮件。也去折腾了一番。对于这个收费，我是不满意的。索性一鼓作气，搬家去 github。上次搬家还是2014年呢，当时写了一篇<a href="2014-03-21.html">日志</a>。 Farbox 的理念其实很接近 github 博客了，所有的数据都在用户手里。而且因为都是采用 markdown 格式，这回搬家也算无缝衔接。</p>
 <p>说是搬家，域名其实未变，只不过换了一家网站托管。 Github 本质上只能托管静态博客，也就是所有网页都需线下生成，再部署到服务器。 我采用 <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 作为静态博客的生成引擎。Hexo 没有用户界面，需要用命令行来控制。更新博客大概就是两行命令</p>
-<pre class="hljs"><code class="bash">$ hexo generate <span class="hljs-comment"># 或 hexo g</span>
-$ hexo deploy <span class="hljs-comment"># 或 hexo d</span>
+<pre class="language-bash"><code class="language-bash">$ hexo generate <span class="token comment"># 或 hexo g</span>
+$ hexo deploy <span class="token comment"># 或 hexo d</span>
 </code></pre>
 <p>那么简单。</p>
 <p>Hexo 还解决了一个痛点：以往用 farbox 调试网页，都不得不把它部署到线上。而 hexo 只需通过一条命令 <code>hexo server</code> 或 <code>hexo s</code> 就可以部署到本地服务器，从而看到效果。</p>

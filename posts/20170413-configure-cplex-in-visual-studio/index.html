@@ -35,25 +35,34 @@
 <link rel="canonical" href="http://blog.fangzhou.me/posts/20170413-configure-cplex-in-visual-studio/">
 
 
-<meta name="description" content="4.13.2017 更新。 注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
+<meta name="description" content="4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
 <meta name="keywords" content="折腾">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何一步配置 Visual Studio C++ 调用 CPLEX 接口">
 <meta property="og:url" content="http://blog.fangzhou.me/posts/20170413-configure-cplex-in-visual-studio/index.html">
 <meta property="og:site_name" content="蓝雨衣">
-<meta property="og:description" content="4.13.2017 更新。 注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
+<meta property="og:description" content="4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2019-03-20T21:43:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何一步配置 Visual Studio C++ 调用 CPLEX 接口">
-<meta name="twitter:description" content="4.13.2017 更新。 注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
+<meta name="twitter:description" content="4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.1/katex.min.css">
 <link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_38tomuzattr.css">
 
-
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'wqu5pou',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
 
 
     <title> 如何一步配置 Visual Studio C++ 调用 CPLEX 接口 - 蓝雨衣 </title>
@@ -112,15 +121,11 @@
     
             <div class="post-content">
             <blockquote>
-<p>4.13.2017 更新。<br>
-注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。</p>
+<p>4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。</p>
 </blockquote>
 <p>步骤就一步：</p>
-<p>直接用 Visual Studio 打开<br>
-<code>C:\Program Files\IBM\ILOG\CPLEX_Studio1271\cplex\examples\x64_windows_vs2015\stat_mdd\blend.vcxproj</code>，<br>
-然后 build。</p>
-<p>当然，具体路径应根据自己电脑的安装路径修改。<br>
-但是有个不方便的地方是，blend.vcxproj 所指向的 blend.cpp 文件并不在同一个地方。为了方便以后写代码，可以这么做：</p>
+<p>直接用 Visual Studio 打开<code>C:\Program Files\IBM\ILOG\CPLEX_Studio1271\cplex\examples\x64_windows_vs2015\stat_mdd\blend.vcxproj</code>，然后 build。</p>
+<p>当然，具体路径应根据自己电脑的安装路径修改。但是有个不方便的地方是，blend.vcxproj 所指向的 blend.cpp 文件并不在同一个地方。为了方便以后写代码，可以这么做：</p>
 <ul>
 <li>用记事本打开 blend.vcxproj，翻到最后，把 <code>&lt;ClCompile Include=&quot;..\..\src\cpp\blend.cpp&quot; /&gt;</code> 替换为 <code>&lt;ClCompile Include=&quot;blend.cpp&quot; /&gt;</code>。</li>
 <li>将 blend.cpp 文件拷贝到 blend.vcxproj 所在文件夹即可。</li>
@@ -139,7 +144,7 @@
 </ul>
 <p>以下正文开始。</p>
 <hr>
-<h3 id="如何配置-visual-studio-c-调用-cplex-接口"><a class="markdownIt-Anchor" href="#如何配置-visual-studio-c-调用-cplex-接口"></a> 如何配置 Visual Studio C++ 调用 CPLEX 接口</h3>
+<h3>如何配置 Visual Studio C++ 调用 CPLEX 接口</h3>
 <p>软件版本:Visual Studio 2012, CPLEX 12.5.1</p>
 <p>注：以下文件路径需要根据 CPLEX 在自己电脑上的安装路径相应修改。</p>
 <ol>
@@ -241,7 +246,7 @@
         <div class="post-toc">
             <h4>Contents</h4>
             <div class="post-toc-content">
-                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何配置-visual-studio-c-调用-cplex-接口"><span class="toc-text"> 如何配置 Visual Studio C++ 调用 CPLEX 接口</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">如何配置 Visual Studio C++ 调用 CPLEX 接口</span></a></li></ol>
             </div>
         </div>
     </div>

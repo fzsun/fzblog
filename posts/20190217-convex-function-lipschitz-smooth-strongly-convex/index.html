@@ -381,6 +381,7 @@ document.onkeydown = function(evt) {
       console.log("send pageview: " + location.pathname + location.search);
     });
     InstantClick.init();
+    ga('send', 'pageview', location.pathname + location.search);
   </script>
 
   </body>

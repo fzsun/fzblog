@@ -32,14 +32,14 @@
 
 
 
-<link rel="canonical" href="http://blog.fangzhou.me/posts/20120811-article/">
+<link rel="canonical" href="https://blog.fangzhou.me/posts/20120811-article/">
 
 
 <meta name="description" content="有个童鞋说，她没有爱好。她觉得一旦自己闲下来，就会投入电视剧的怀抱。看到周围每个人都或多或少地热爱某件事情，她苦恼。 想想自己，摄影似乎渐渐成为一个毕生的爱好。有时候就是这样，拿起来，才发现永远放不下了。回想当初，拍照也仅局限于把景和人拍全，画质与构图则是无所谓的。也不懂后期，甚至深深鄙视后期的造作感。到如今，自己一步一步爱上它，一步一步地打破成见，树立审美，一年前都不能预料到如今境地吧。">
 <meta name="keywords" content="纪事">
 <meta property="og:type" content="article">
 <meta property="og:title" content="请一本正经摄影好嘛？">
-<meta property="og:url" content="http://blog.fangzhou.me/posts/20120811-article/index.html">
+<meta property="og:url" content="https://blog.fangzhou.me/posts/20120811-article/index.html">
 <meta property="og:site_name" content="蓝雨衣">
 <meta property="og:description" content="有个童鞋说，她没有爱好。她觉得一旦自己闲下来，就会投入电视剧的怀抱。看到周围每个人都或多或少地热爱某件事情，她苦恼。 想想自己，摄影似乎渐渐成为一个毕生的爱好。有时候就是这样，拿起来，才发现永远放不下了。回想当初，拍照也仅局限于把景和人拍全，画质与构图则是无所谓的。也不懂后期，甚至深深鄙视后期的造作感。到如今，自己一步一步爱上它，一步一步地打破成见，树立审美，一年前都不能预料到如今境地吧。">
 <meta property="og:locale" content="en">
@@ -53,7 +53,8 @@
 <link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_41lrx6amatu.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700|Source+Code+Pro&amp;subset=chinese-simplified">
-
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
     <title> 请一本正经摄影好嘛？ - 蓝雨衣 </title>
   </head>
 
@@ -151,22 +152,22 @@
   </nav>
 
         
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+
 
 <div class="comments" id="comments">
     <div id="vcomments"></div>
     <script>
-        new Valine({
+    new Valine({
             el: '#vcomments' ,
             appId: '0Kg4nfVVDNlSkugkA0meEIy9-gzGzoHsz',
             appKey: 'yCYv0a0B6QIAJYgLzCxgsHOh',
-            notify: true,
+            notify: false,
             avatar:'mp',
             placeholder: '来啊，吐槽一番！',
-            visitor: false
+            visitor: false,
+            path: window.location.pathname
         });
-    </script>
+  </script>
 </div>
 
 
@@ -199,7 +200,7 @@
       <i class="iconfont icon-up"></i>
     </a>
 
-    <script type="text/javascript">
+    <script data-no-instant>
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
@@ -240,17 +241,23 @@ document.onkeydown = function(evt) {
 </script>
 
 
-    
-    <script data-cfasync="false">
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      
-      ga('create', 'UA-49265936-4', 'auto');
-      ga('send', 'pageview');
-    </script>
-    
-  <script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+  <script data-no-instant src="https://cdn.jsdelivr.net/npm/instantclick2@1.1.0/src/instantclick.min.js"></script>
+
+
+  <script data-no-instant>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-49265936-4', 'auto');
+
+    InstantClick.on('change', function() {
+      ga('send', 'pageview', location.pathname + location.search);
+      console.log("send pageview: " + location.pathname + location.search);
+    });
+    InstantClick.init();
+  </script>
+
   </body>
 </html>

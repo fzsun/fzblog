@@ -30,13 +30,13 @@
 
 
 
-<link rel="canonical" href="http://blog.fangzhou.me/about/">
+<link rel="canonical" href="https://blog.fangzhou.me/about/">
 
 
 <meta name="description" content="1991，巨蟹座，成长于四川，上海念大学，美国读博。  不定期更新一些闲言碎语。 很高兴遇见你。  邮箱: sun [艾特] fangzhou.me">
 <meta property="og:type" content="website">
 <meta property="og:title" content="关于">
-<meta property="og:url" content="http://blog.fangzhou.me/about/index.html">
+<meta property="og:url" content="https://blog.fangzhou.me/about/index.html">
 <meta property="og:site_name" content="蓝雨衣">
 <meta property="og:description" content="1991，巨蟹座，成长于四川，上海念大学，美国读博。  不定期更新一些闲言碎语。 很高兴遇见你。  邮箱: sun [艾特] fangzhou.me">
 <meta property="og:locale" content="en">
@@ -50,7 +50,8 @@
 <link rel="stylesheet" href="https://at.alicdn.com/t/font_1105623_41lrx6amatu.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700|Source+Code+Pro&amp;subset=chinese-simplified">
-
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
     <title> 关于 - 蓝雨衣 </title>
   </head>
 
@@ -139,22 +140,22 @@
 <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1r8578BwDGRYFRJXj2DBGWU4SNBM&ll=40%2C-95&z=4" width="640" height="480"></iframe>
             </div>
             
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script>
+
 
 <div class="comments" id="comments">
     <div id="vcomments"></div>
     <script>
-        new Valine({
+    new Valine({
             el: '#vcomments' ,
             appId: '0Kg4nfVVDNlSkugkA0meEIy9-gzGzoHsz',
             appKey: 'yCYv0a0B6QIAJYgLzCxgsHOh',
-            notify: true,
+            notify: false,
             avatar:'mp',
             placeholder: '来啊，吐槽一番！',
-            visitor: false
+            visitor: false,
+            path: window.location.pathname
         });
-    </script>
+  </script>
 </div>
 
 
@@ -182,7 +183,7 @@
       <i class="iconfont icon-up"></i>
     </a>
 
-    <script type="text/javascript">
+    <script data-no-instant>
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
@@ -223,17 +224,23 @@ document.onkeydown = function(evt) {
 </script>
 
 
-    
-    <script data-cfasync="false">
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      
-      ga('create', 'UA-49265936-4', 'auto');
-      ga('send', 'pageview');
-    </script>
-    
-  <script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+  <script data-no-instant src="https://cdn.jsdelivr.net/npm/instantclick2@1.1.0/src/instantclick.min.js"></script>
+
+
+  <script data-no-instant>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-49265936-4', 'auto');
+
+    InstantClick.on('change', function() {
+      ga('send', 'pageview', location.pathname + location.search);
+      console.log("send pageview: " + location.pathname + location.search);
+    });
+    InstantClick.init();
+  </script>
+
   </body>
 </html>

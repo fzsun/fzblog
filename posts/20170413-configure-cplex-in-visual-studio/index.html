@@ -35,18 +35,18 @@
 <link rel="canonical" href="https://blog.fangzhou.me/posts/20170413-configure-cplex-in-visual-studio/">
 
 
-<meta name="description" content="4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
+<meta name="description" content="4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。   步骤就一步：">
 <meta name="keywords" content="折腾">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何一步配置 Visual Studio C++ 调用 CPLEX 接口">
 <meta property="og:url" content="https://blog.fangzhou.me/posts/20170413-configure-cplex-in-visual-studio/index.html">
 <meta property="og:site_name" content="蓝雨衣">
-<meta property="og:description" content="4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
+<meta property="og:description" content="4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。   步骤就一步：">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2019-03-20T21:43:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何一步配置 Visual Studio C++ 调用 CPLEX 接口">
-<meta name="twitter:description" content="4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。  步骤就一步：">
+<meta name="twitter:description" content="4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。   步骤就一步：">
 
 
 <link rel="stylesheet" href="/css/style.css">
@@ -113,35 +113,35 @@
             <blockquote>
 <p>4.13.2017 更新。注：找到一个更快的方法，对于 Visual Studio 的用户几乎是免配置直接用。</p>
 </blockquote>
-<p>步骤就一步：</p>
-<p>直接用 Visual Studio 打开<code>C:\Program Files\IBM\ILOG\CPLEX_Studio1271\cplex\examples\x64_windows_vs2015\stat_mdd\blend.vcxproj</code>，然后 build。</p>
-<p>当然，具体路径应根据自己电脑的安装路径修改。但是有个不方便的地方是，blend.vcxproj 所指向的 blend.cpp 文件并不在同一个地方。为了方便以后写代码，可以这么做：</p>
+<p> 步骤就一步：</p>
+<p> 直接用 Visual Studio 打开 <code>C:\Program Files\IBM\ILOG\CPLEX_Studio1271\cplex\examples\x64_windows_vs2015\stat_mdd\blend.vcxproj</code>，然后 build。</p>
+<p> 当然，具体路径应根据自己电脑的安装路径修改。但是有个不方便的地方是，blend.vcxproj 所指向的 blend.cpp 文件并不在同一个地方。为了方便以后写代码，可以这么做：</p>
 <ul>
-<li>用记事本打开 blend.vcxproj，翻到最后，把 <code>&lt;ClCompile Include=&quot;..\..\src\cpp\blend.cpp&quot; /&gt;</code> 替换为 <code>&lt;ClCompile Include=&quot;blend.cpp&quot; /&gt;</code>。</li>
-<li>将 blend.cpp 文件拷贝到 blend.vcxproj 所在文件夹即可。</li>
-<li>用这两个文件作为模板，写自己的代码。这两个文件可以拷贝到系统的任何地方。</li>
+<li> 用记事本打开 blend.vcxproj，翻到最后，把 <code>&lt;ClCompile Include=&quot;..\..\src\cpp\blend.cpp&quot; /&gt;</code> 替换为 <code>&lt;ClCompile Include=&quot;blend.cpp&quot; /&gt;</code>。</li>
+<li> 将 blend.cpp 文件拷贝到 blend.vcxproj 所在文件夹即可。</li>
+<li> 用这两个文件作为模板，写自己的代码。这两个文件可以拷贝到系统的任何地方。</li>
 </ul>
-<p><strong>以下为原文，写于 2.14.2016</strong></p>
+<p><strong> 以下为原文，写于 2.14.2016</strong></p>
 <hr>
-<p>以前使用 CPLEX 都是在 CPLEX Studio 里用 OPL语言，或者用 AMPL 调用 CPLEX solver。这类建模语言特别容易上手。然而做 research 毕竟还是需要更灵活的使用 CPLEX，稍微混合几个算法就实现不了。</p>
-<p>尝试在 VS 2012中调用 CPLEX 接口，硬是从第一步 <code>#include &lt;ilcplex/ilocplex.h&gt;</code> 就卡住。为了让示例程序跑起来，配置过程中又不断发现坑。网上竟然也没有一个完整的 step by step 的指导（注，后来在中文网络倒是发现不少博文）。折腾了一下午终于妥了。决定把这个坑爹的过程记录一下。</p>
+<p> 以前使用 CPLEX 都是在 CPLEX Studio 里用 OPL 语言，或者用 AMPL 调用 CPLEX solver。这类建模语言特别容易上手。然而做 research 毕竟还是需要更灵活的使用 CPLEX，稍微混合几个算法就实现不了。</p>
+<p> 尝试在 VS 2012 中调用 CPLEX 接口，硬是从第一步 <code>#include &lt;ilcplex/ilocplex.h&gt;</code> 就卡住。为了让示例程序跑起来，配置过程中又不断发现坑。网上竟然也没有一个完整的 step by step 的指导（注，后来在中文网络倒是发现不少博文）。折腾了一下午终于妥了。决定把这个坑爹的过程记录一下。</p>
 <p>Before that，先把 IBM 的几个非常有用的 CPLEX 教程传送一下：</p>
 <ul>
-<li><a href="http://www-01.ibm.com/support/knowledgecenter/api/content/nl/en-us/SSSA5P_12.6.2/ilog.odms.studio.help/Optimization_Studio/topics/PLUGINS_ROOT/ilog.odms.studio.help/pdf/gscplex.pdf" target="_blank" rel="noopener">Getting Started with CPLEX</a> 使用 CPLEX 以及 Concert Technology（也就是IBM ILOG给各大编程语言，如 C++, Java, C#, Python，写的API） 必须看的第一个文档，要细看。</li>
+<li><a href="http://www-01.ibm.com/support/knowledgecenter/api/content/nl/en-us/SSSA5P_12.6.2/ilog.odms.studio.help/Optimization_Studio/topics/PLUGINS_ROOT/ilog.odms.studio.help/pdf/gscplex.pdf" target="_blank" rel="noopener">Getting Started with CPLEX</a> 使用 CPLEX 以及 Concert Technology（也就是 IBM ILOG 给各大编程语言，如 C++, Java, C#, Python，写的 API） 必须看的第一个文档，要细看。</li>
 <li><a href="http://www-01.ibm.com/support/knowledgecenter/api/content/nl/en-us/SSSA5P_12.6.2/ilog.odms.studio.help/Optimization_Studio/topics/PLUGINS_ROOT/ilog.odms.studio.help/pdf/usrcplex.pdf" target="_blank" rel="noopener">CPLEX User’s Manual</a>  算是中阶用户需要看的文档，也是关于 CPLEX 的 API，也推荐细看。</li>
 <li><a href="http://www-01.ibm.com/support/knowledgecenter/api/content/nl/en-us/SSSA5P_12.6.2/ilog.odms.studio.help/Optimization_Studio/topics/PLUGINS_ROOT/ilog.odms.studio.help/pdf/paramcplex.pdf" target="_blank" rel="noopener">CPLEX Parameters Reference Manual</a> 具体微调 CPLEX 各项参数需要参考的文档，用的时候再查就行了。</li>
 <li><a href="http://www-01.ibm.com/support/knowledgecenter/api/content/nl/en-us/SSSA5P_12.6.2/ilog.odms.studio.help/Optimization_Studio/topics/PLUGINS_ROOT/ilog.odms.studio.help/pdf/opl_languser.pdf" target="_blank" rel="noopener">OPL Language User's Manual</a> OPL (the IBM ILOG Optimization Programming Language) 的教程，跟之前三个文档完全是不相干的另一个体系， OPL 语言只能用在 CPLEX Studio 里头。</li>
 </ul>
-<p>以下正文开始。</p>
+<p> 以下正文开始。</p>
 <hr>
-<h3 id="如何配置-visual-studio-c-调用-cplex-接口"><a class="anchor" href="#如何配置-visual-studio-c-调用-cplex-接口"></a>如何配置 Visual Studio C++ 调用 CPLEX 接口</h3>
-<p>软件版本:Visual Studio 2012, CPLEX 12.5.1</p>
-<p>注：以下文件路径需要根据 CPLEX 在自己电脑上的安装路径相应修改。</p>
+<h3 id="如何配置 -visual-studio-c- 调用 -cplex- 接口"><a class="anchor" href="# 如何配置 -visual-studio-c- 调用 -cplex- 接口"></a> 如何配置 Visual Studio C++ 调用 CPLEX 接口 </h3>
+<p> 软件版本:Visual Studio 2012, CPLEX 12.5.1</p>
+<p> 注：以下文件路径需要根据 CPLEX 在自己电脑上的安装路径相应修改。</p>
 <ol>
-<li>新建默认的 C++ Win32 Console Application 项目。</li>
-<li>源码加入头文件 <code>#include &lt;ilcplex/ilocplex.h&gt;</code> 和 一条宏命令<code>ILOSTLBEGIN</code>，后者其实就是用来调用C++的STL。</li>
-<li>BUILD -&gt; Configuration Manager, 把win32改成x64平台。这一步我猜测是因为我的 CPLEX 版本是64位的，所以必须要改。总之 C++和 CPLEX 在平台上要一致。</li>
-<li>接下来需要让 C++ 的 Linker 知道CPLEX 以及 Concert Technology 的库在哪里。Project -&gt; [你的项目名] Properties -&gt; Configuration Properties -&gt; Linker -&gt; Input -&gt; Additional Dependencies 添加:</li>
+<li> 新建默认的 C++ Win32 Console Application 项目。</li>
+<li> 源码加入头文件 <code>#include &lt;ilcplex/ilocplex.h&gt;</code> 和 一条宏命令 <code>ILOSTLBEGIN</code>，后者其实就是用来调用 C++ 的 STL。</li>
+<li>BUILD -&gt; Configuration Manager, 把 win32 改成 x64 平台。这一步我猜测是因为我的 CPLEX 版本是 64 位的，所以必须要改。总之 C++ 和 CPLEX 在平台上要一致。</li>
+<li> 接下来需要让 C++ 的 Linker 知道 CPLEX 以及 Concert Technology 的库在哪里。Project -&gt; [你的项目名] Properties -&gt; Configuration Properties -&gt; Linker -&gt; Input -&gt; Additional Dependencies 添加:</li>
 </ol>
 <blockquote>
 <ul>
@@ -151,7 +151,7 @@
 </ul>
 </blockquote>
 <ol start="5">
-<li>然后 include 的各种路径也要添加进去。Project -&gt; [你的项目名] Properties -&gt; Configuration Properties -&gt; C/C++ -&gt; General -&gt; Additional Include Directories 添加:</li>
+<li> 然后 include 的各种路径也要添加进去。Project -&gt; [你的项目名] Properties -&gt; Configuration Properties -&gt; C/C++ -&gt; General -&gt; Additional Include Directories 添加:</li>
 </ol>
 <blockquote>
 <ul>
@@ -160,18 +160,18 @@
 </ul>
 </blockquote>
 <ol start="6">
-<li>Preprocessor 中要添加一些指令，最重要的自然是<code>IL_STD</code>。 Project -&gt; ... Properties -&gt; Configuration Properties -&gt; C/C++ -&gt; Preprocessor -&gt; Preprocessor Definitions 添加:</li>
+<li>Preprocessor 中要添加一些指令，最重要的自然是 <code>IL_STD</code>。 Project -&gt; ... Properties -&gt; Configuration Properties -&gt; C/C++ -&gt; Preprocessor -&gt; Preprocessor Definitions 添加:</li>
 </ol>
 <blockquote>
 <ul>
-<li>WIN64 (注：如果是32位的，此处应该是 WIN32)</li>
+<li>WIN64 (注：如果是 32 位的，此处应该是 WIN32)</li>
 <li>_CONSOLE</li>
 <li>IL_STD</li>
 <li>_CRT_SECURE_NO_WARNINGS</li>
 </ul>
 </blockquote>
 <ol start="7">
-<li>最后 check 下 debug 功能是否开启了，不然没法 debug。Project -&gt; ... Properties -&gt; Configuration Properties -&gt; Linker -&gt; Debugging -&gt; Generate Debug Info 改成 YES</li>
+<li> 最后 check 下 debug 功能是否开启了，不然没法 debug。Project -&gt; ... Properties -&gt; Configuration Properties -&gt; Linker -&gt; Debugging -&gt; Generate Debug Info 改成 YES</li>
 </ol>
 
             </div>
@@ -238,7 +238,7 @@
         <div class="post-toc">
             <div class="toc-title">Contents</div>
             <div class="post-toc-content">
-                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何配置-visual-studio-c-调用-cplex-接口"><span class="toc-text">如何配置 Visual Studio C++ 调用 CPLEX 接口</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何配置 -visual-studio-c- 调用 -cplex- 接口"><span class="toc-text"> 如何配置 Visual Studio C++ 调用 CPLEX 接口 </span></a></li></ol>
             </div>
         </div>
     </div>
